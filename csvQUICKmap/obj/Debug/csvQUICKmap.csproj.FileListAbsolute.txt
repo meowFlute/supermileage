@@ -1,0 +1,18 @@
+C:\Users\Mobile Wind Tunnel\Desktop\Scott's Tunes\Data Aquisition\csvQUICKmap\csvQUICKmap\bin\Debug\csvQUICKmap.exe.config
+C:\Users\Mobile Wind Tunnel\Desktop\Scott's Tunes\Data Aquisition\csvQUICKmap\csvQUICKmap\bin\Debug\csvQUICKmap.exe
+C:\Users\Mobile Wind Tunnel\Desktop\Scott's Tunes\Data Aquisition\csvQUICKmap\csvQUICKmap\bin\Debug\csvQUICKmap.pdb
+C:\Users\Mobile Wind Tunnel\Desktop\Scott's Tunes\Data Aquisition\csvQUICKmap\csvQUICKmap\obj\Debug\csvQUICKmap.csprojResolveAssemblyReference.cache
+C:\Users\Mobile Wind Tunnel\Desktop\Scott's Tunes\Data Aquisition\csvQUICKmap\csvQUICKmap\obj\Debug\csvQUICKmap.Form1.resources
+C:\Users\Mobile Wind Tunnel\Desktop\Scott's Tunes\Data Aquisition\csvQUICKmap\csvQUICKmap\obj\Debug\csvQUICKmap.Properties.Resources.resources
+C:\Users\Mobile Wind Tunnel\Desktop\Scott's Tunes\Data Aquisition\csvQUICKmap\csvQUICKmap\obj\Debug\csvQUICKmap.csproj.GenerateResource.Cache
+C:\Users\Mobile Wind Tunnel\Desktop\Scott's Tunes\Data Aquisition\csvQUICKmap\csvQUICKmap\obj\Debug\csvQUICKmap.exe
+C:\Users\Mobile Wind Tunnel\Desktop\Scott's Tunes\Data Aquisition\csvQUICKmap\csvQUICKmap\obj\Debug\csvQUICKmap.pdb
+C:\Users\Mobile Wind Tunnel\Documents\supermileage\csvQUICKmap\bin\Debug\csvQUICKmap.exe.config
+C:\Users\Mobile Wind Tunnel\Documents\supermileage\csvQUICKmap\obj\Debug\csvQUICKmap.exe
+C:\Users\Mobile Wind Tunnel\Documents\supermileage\csvQUICKmap\obj\Debug\csvQUICKmap.pdb
+C:\Users\Mobile Wind Tunnel\Documents\supermileage\csvQUICKmap\bin\Debug\csvQUICKmap.exe
+C:\Users\Mobile Wind Tunnel\Documents\supermileage\csvQUICKmap\bin\Debug\csvQUICKmap.pdb
+C:\Users\Mobile Wind Tunnel\Documents\supermileage\csvQUICKmap\obj\Debug\csvQUICKmap.csprojResolveAssemblyReference.cache
+C:\Users\Mobile Wind Tunnel\Documents\supermileage\csvQUICKmap\obj\Debug\csvQUICKmap.Form1.resources
+C:\Users\Mobile Wind Tunnel\Documents\supermileage\csvQUICKmap\obj\Debug\csvQUICKmap.Properties.Resources.resources
+C:\Users\Mobile Wind Tunnel\Documents\supermileage\csvQUICKmap\obj\Debug\csvQUICKmap.csproj.GenerateResource.Cache
