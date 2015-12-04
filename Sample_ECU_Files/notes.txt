@@ -1,0 +1,11 @@
+****NOTES ON PED FILE FORMAT****
+-The fuel table starts at BYTE 186 and ends at BYTE 1485
+-Each number is represented by a 16 bit something, that something seems to be scaleable, but no matter what only 8 bits are used....?
+-From what I can tell, it is an 8 bit number that is just distributed as evenly as possible over the range you choose
+-The range for our car is 0.01 - 4.00, which means we are distributing 256 bits over 400 possible locations
+
+- This means that 1 bit = 0.015625 in decimal for our particular map (confirmed)
+- zero doesn't make sense, so 0x00 actually represents 0.015625 (which seems to be rounded)
+- They go column by column, not row by row. There are 25 columns of 26 rows. making for 650 BYTES 
+that for some reason are stored in 16 bits each with a byte of trailing zeros. 1300 BYTES of data to read
+discarding every other byte and then adding one and scaling the byte by 0.015625. 

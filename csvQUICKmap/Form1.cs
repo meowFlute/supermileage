@@ -132,7 +132,12 @@ namespace csvQUICKmap
             }
 
             //generate unique filepath that (current local time)
-            string outputFilePath = @"../../../Outputs/output.csv";
+            #if DEBUG   //debug output
+            string outputFilePath = @"../../../Outputs/Measured Lambda Table.csv";
+            #else       //release output
+            //TODO put a different output for the release build here
+            #endif
+
             StringBuilder csv = new StringBuilder();
 
             for(int i = 26; i >= 0; i--)
@@ -225,6 +230,173 @@ namespace csvQUICKmap
                 filenames.Remove(listBox1.SelectedItem.ToString());
                 listBox1.Update();
             }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            //populate lists with data
+            foreach (string filename in pedFile)
+            {
+                BinaryReader reader = null;
+                try
+                {
+                    reader = new BinaryReader(File.OpenRead(filename));
+                }
+                catch (IOException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    return;
+                }
+
+                string line = reader.ReadLine();
+                while (!reader.EndOfStream)
+                {
+                    line = reader.ReadLine();
+                    string[] values = line.Split(',');
+                    rpm.Add(Convert.ToDouble(values[1]));
+                    tps.Add(Convert.ToDouble(values[4]));
+                    map.Add(Convert.ToDouble(values[6]));
+                    lambda.Add(Convert.ToDouble(values[10]));
+                }
+                reader.Close();
+            }
+
+            //create lists for each variable
+            List<double> rpm = new List<double>();
+            List<double> tps = new List<double>();
+            List<double> map = new List<double>();
+            List<double> lambda = new List<double>();
+
+            //creates array to store cells of final .csv matrix
+            double[, ,] cells = new double[25, 26, 2];
+
+            //populate lists with data
+            foreach (string filename in filenames)
+            {
+                StreamReader reader = null;
+                try
+                {
+                    reader = new StreamReader(File.OpenRead(filename));
+                }
+                catch (IOException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    return;
+                }
+
+                string line = reader.ReadLine();
+                while (!reader.EndOfStream)
+                {
+                    line = reader.ReadLine();
+                    string[] values = line.Split(',');
+                    rpm.Add(Convert.ToDouble(values[1]));
+                    tps.Add(Convert.ToDouble(values[4]));
+                    map.Add(Convert.ToDouble(values[6]));
+                    lambda.Add(Convert.ToDouble(values[10]));
+                }
+                reader.Close();
+            }
+
+            //Generate map of data
+            for (int i = 0; i < lambda.Count; i++)
+            {
+                //casting as an int truncates, which is what we want I'm pretty sure.
+                int rpmIndex = (int)(rpm[i] / 250);
+                int tpsIndex = (int)(tps[i] / 4);
+                int mapIndex = (int)((map[i] - 2.5) / 0.5);
+                if (Y_Value_DropDown.Text == "TPS   (%)") //throttle position being used 
+                {
+                    cells[rpmIndex, tpsIndex, 0] += 1;
+                    cells[rpmIndex, tpsIndex, 1] += lambda[i];
+                }
+                else  // MAP Sensor being used
+                {
+                    cells[rpmIndex, mapIndex, 0] += 1;
+                    cells[rpmIndex, mapIndex, 1] += lambda[i];
+                }
+            }
+
+            
+            #if DEBUG   //debug output
+            string outputFilePath = @"../../../Outputs/Measured Lambda Table.csv";
+            #else       //release output
+            //TODO put a different output for the release build here
+            #endif
+
+            StringBuilder csv = new StringBuilder();
+
+            for (int i = 26; i >= 0; i--)
+            {
+                for (int j = 0; j < 25; j++)
+                {
+                    if (i == 26)
+                    {
+                        if (j == 0)
+                        {
+                            csv.Append(" ,");
+                        }
+                        if (j != 24)
+                        {
+                            csv.Append(string.Format("{0}, ", (j * 250).ToString()));
+                        }
+                        else if (j == 24)
+                        {
+                            csv.Append(string.Format("{0}{1} ", (j * 250).ToString(), Environment.NewLine));
+                        }
+                    }
+                    else
+                    {
+                        if (j == 0)
+                        {
+                            //add in the tps value column
+                            if (Y_Value_DropDown.Text == "TPS   (%)")
+                            {
+                                csv.Append(string.Format("{0}, ", (i * 4).ToString()));
+                            }
+                            //add in the map value column
+                            else
+                            {
+                                csv.Append(string.Format("{0}, ", (2.5 + (i * 0.5)).ToString()));
+                            }
+                        }
+                        if (j != 24)
+                        {
+                            if (cells[j, i, 0] != 0)
+                            {
+                                csv.Append(string.Format("{0}, ", (cells[j, i, 1] / cells[j, i, 0]).ToString()));
+                            }
+                            else
+                            {
+                                csv.Append("-1, ");
+                            }
+                        }
+                        else if (j == 24)
+                        {
+                            if (cells[j, i, 0] != 0)
+                            {
+                                csv.Append(string.Format("{0}{1}", (cells[j, i, 1] / cells[j, i, 0]).ToString(), Environment.NewLine));
+                            }
+                            else
+                            {
+                                csv.Append(string.Format("{0}{1}", "-1", Environment.NewLine));
+                            }
+                        }
+                    }
+                }
+            }
+
+            try
+            {
+                File.WriteAllText(outputFilePath.ToString(), csv.ToString());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+
+
+            MessageBox.Show(string.Format("File written to {0}", outputFilePath));
         }
     }
 

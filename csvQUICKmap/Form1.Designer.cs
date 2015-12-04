@@ -44,6 +44,7 @@
             this.listBox2 = new System.Windows.Forms.ListBox();
             this.label5 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.form1BindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -53,17 +54,17 @@
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 0;
-            this.buttonCancel.Text = "Cancel";
+            this.buttonCancel.Text = "Close";
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
             // buttonGenerate
             // 
-            this.buttonGenerate.Location = new System.Drawing.Point(311, 188);
+            this.buttonGenerate.Location = new System.Drawing.Point(194, 188);
             this.buttonGenerate.Name = "buttonGenerate";
-            this.buttonGenerate.Size = new System.Drawing.Size(75, 23);
+            this.buttonGenerate.Size = new System.Drawing.Size(192, 23);
             this.buttonGenerate.TabIndex = 1;
-            this.buttonGenerate.Text = "Generate";
+            this.buttonGenerate.Text = "Generate Measured Lambda Table";
             this.buttonGenerate.UseVisualStyleBackColor = true;
             this.buttonGenerate.Click += new System.EventHandler(this.buttonGenerate_Click);
             // 
@@ -125,7 +126,7 @@
             this.listBox1.FormattingEnabled = true;
             this.listBox1.Location = new System.Drawing.Point(191, 25);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(427, 108);
+            this.listBox1.Size = new System.Drawing.Size(427, 95);
             this.listBox1.TabIndex = 8;
             // 
             // form1BindingSource
@@ -176,7 +177,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(227, 136);
+            this.label5.Location = new System.Drawing.Point(221, 136);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(361, 13);
             this.label5.TabIndex = 13;
@@ -192,11 +193,22 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(12, 188);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(176, 23);
+            this.button3.TabIndex = 15;
+            this.button3.Text = "Generate Suggested Fuel Table";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(656, 221);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.listBox2);
@@ -239,6 +251,7 @@
         private System.Windows.Forms.ListBox listBox2;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
     }
 }
 
