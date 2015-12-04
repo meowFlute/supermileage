@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Office.Interop.Excel;
 
 namespace csvQUICKmap
 {
@@ -234,31 +235,36 @@ namespace csvQUICKmap
 
         private void button3_Click(object sender, EventArgs e)
         {
-            //populate lists with data
+            //populate bytes array with data
+            byte[] fileBytes = null;
             foreach (string filename in pedFile)
             {
-                BinaryReader reader = null;
                 try
                 {
-                    reader = new BinaryReader(File.OpenRead(filename));
+                    fileBytes = File.ReadAllBytes(filename);
                 }
                 catch (IOException ex)
                 {
                     MessageBox.Show(ex.Message);
                     return;
                 }
+            }
 
-                string line = reader.ReadLine();
-                while (!reader.EndOfStream)
+            //grab the fuel table out of the binary file
+            int j = 0, k = 25;
+            double[,] fuelTable = new double[25, 26];
+            for (int i = 185; i < 1485; i++)
+            {
+                if (i % 2 == 1) //skip all of the empty bytes (every other one)
                 {
-                    line = reader.ReadLine();
-                    string[] values = line.Split(',');
-                    rpm.Add(Convert.ToDouble(values[1]));
-                    tps.Add(Convert.ToDouble(values[4]));
-                    map.Add(Convert.ToDouble(values[6]));
-                    lambda.Add(Convert.ToDouble(values[10]));
+                    if (k == -1) //increment down each column (j) one by one (rows = k)
+                    {
+                        k = 25;
+                        j++;
+                    }
+                    fuelTable[j, k] = ((uint)fileBytes[i] + 1) * 0.015625;
+                    k--;
                 }
-                reader.Close();
             }
 
             //create lists for each variable
@@ -316,9 +322,30 @@ namespace csvQUICKmap
                 }
             }
 
+            //average the collected values into a lambda table
+            double[,] lambdaMeasuredTable = new double[25, 26];
+            for (int i = 0; i < 25; i++)
+            {
+                for (j = 0; j < 26; j++)
+                {
+                    if (cells[i, j, 0] != 0)
+                        lambdaMeasuredTable[i, j] = cells[i, j, 1] / cells[i, j, 0];
+                    else
+                        lambdaMeasuredTable[i, j] = 1;
+                }
+            }
             
+            //adjust the fuel table to try and achieve 1.05
+            for (int i = 0; i < 25; i++)
+            {
+                for (j = 0; j < 26; j++)
+                {
+                    fuelTable[i, j] *= lambdaMeasuredTable[i, j];
+                }
+            }
+
             #if DEBUG   //debug output
-            string outputFilePath = @"../../../Outputs/Measured Lambda Table.csv";
+            string outputFilePath = @"../../../Outputs/Suggested Fuel Table.csv";
             #else       //release output
             //TODO put a different output for the release build here
             #endif
@@ -327,7 +354,7 @@ namespace csvQUICKmap
 
             for (int i = 26; i >= 0; i--)
             {
-                for (int j = 0; j < 25; j++)
+                for (j = 0; j < 25; j++)
                 {
                     if (i == 26)
                     {
@@ -363,7 +390,7 @@ namespace csvQUICKmap
                         {
                             if (cells[j, i, 0] != 0)
                             {
-                                csv.Append(string.Format("{0}, ", (cells[j, i, 1] / cells[j, i, 0]).ToString()));
+                                csv.Append(string.Format("{0}, ", (fuelTable[j,i]).ToString()));
                             }
                             else
                             {
@@ -374,7 +401,7 @@ namespace csvQUICKmap
                         {
                             if (cells[j, i, 0] != 0)
                             {
-                                csv.Append(string.Format("{0}{1}", (cells[j, i, 1] / cells[j, i, 0]).ToString(), Environment.NewLine));
+                                csv.Append(string.Format("{0}{1}", (fuelTable[j,i]).ToString(), Environment.NewLine));
                             }
                             else
                             {
@@ -397,6 +424,15 @@ namespace csvQUICKmap
 
 
             MessageBox.Show(string.Format("File written to {0}", outputFilePath));
+        }
+
+        //fire up excel
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Microsoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();
+            excel.Visible = true;
+            excel.Workbooks.Open(@"C:/scott/csvQUICKplot/git/Outputs/Suggested Fuel Table.csv");
+            excel.Workbooks.Open(@"C:/scott/csvQUICKplot/git/Outputs/Measured Lambda Table.csv");
         }
     }
 
