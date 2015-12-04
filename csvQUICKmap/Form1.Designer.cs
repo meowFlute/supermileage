@@ -41,12 +41,15 @@
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.listBox2 = new System.Windows.Forms.ListBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.form1BindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Location = new System.Drawing.Point(564, 165);
+            this.buttonCancel.Location = new System.Drawing.Point(571, 188);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 0;
@@ -56,7 +59,7 @@
             // 
             // buttonGenerate
             // 
-            this.buttonGenerate.Location = new System.Drawing.Point(356, 165);
+            this.buttonGenerate.Location = new System.Drawing.Point(311, 188);
             this.buttonGenerate.Name = "buttonGenerate";
             this.buttonGenerate.Size = new System.Drawing.Size(75, 23);
             this.buttonGenerate.TabIndex = 1;
@@ -120,7 +123,7 @@
             this.listBox1.DataSource = this.form1BindingSource;
             this.listBox1.DisplayMember = "AutoScroll";
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(191, 35);
+            this.listBox1.Location = new System.Drawing.Point(191, 25);
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(427, 108);
             this.listBox1.TabIndex = 8;
@@ -143,7 +146,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(243, 19);
+            this.label4.Location = new System.Drawing.Point(236, 9);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(327, 13);
             this.label4.TabIndex = 10;
@@ -151,19 +154,52 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(462, 165);
+            this.button1.Location = new System.Drawing.Point(392, 188);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(81, 23);
             this.button1.TabIndex = 11;
-            this.button1.Text = "Remove";
+            this.button1.Text = "Remove .ped";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.buttonRemove_Click);
+            // 
+            // listBox2
+            // 
+            this.listBox2.AllowDrop = true;
+            this.listBox2.DataSource = this.form1BindingSource;
+            this.listBox2.DisplayMember = "AutoScroll";
+            this.listBox2.FormattingEnabled = true;
+            this.listBox2.Location = new System.Drawing.Point(191, 152);
+            this.listBox2.Name = "listBox2";
+            this.listBox2.Size = new System.Drawing.Size(427, 30);
+            this.listBox2.TabIndex = 12;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(227, 136);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(361, 13);
+            this.label5.TabIndex = 13;
+            this.label5.Text = "Performance Electronics File To Edit (Drag a .ped file here to edit fuel table)";
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(479, 188);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(86, 23);
+            this.button2.TabIndex = 14;
+            this.button2.Text = "Remove .csv";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(652, 201);
+            this.ClientSize = new System.Drawing.Size(656, 221);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.listBox2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.comboBox2);
@@ -200,6 +236,9 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.BindingSource form1BindingSource;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ListBox listBox2;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button button2;
     }
 }
 

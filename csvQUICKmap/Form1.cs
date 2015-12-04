@@ -15,16 +15,23 @@ namespace csvQUICKmap
     {
         //variables 
         private BindingList<string> filenames = new BindingList<string>();
-        private double[,,] cells = new double[25,26,2];
+        private BindingList<string> pedFile = new BindingList<string>();
 
         //some form settings
         public Form1()
         {
             InitializeComponent();
+            //intialize the drop ability of the listbox1 for .csv filename display
             listBox1.AllowDrop = true;
             listBox1.DragEnter += new DragEventHandler(listBox1_DragEnter);
             listBox1.DragDrop += new DragEventHandler(listBox1_DragDrop);
             listBox1.DataSource = filenames;
+
+            //intialize the drop ability of the listbox2 for .ped filename display
+            listBox2.AllowDrop = true;
+            listBox2.DragEnter += new DragEventHandler(listBox2_DragEnter);
+            listBox2.DragDrop += new DragEventHandler(listBox2_DragDrop);
+            listBox2.DataSource = pedFile;
         }
 
         //events
@@ -43,6 +50,24 @@ namespace csvQUICKmap
             listBox1.Update();
         }
 
+        void listBox2_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
+        }
+
+        void listBox2_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            foreach (string file in files)
+            {
+                if (pedFile.Count < 1)
+                    pedFile.Add(file);
+                else
+                    MessageBox.Show("Only one .ped file can be edited at a time");
+            }
+            listBox2.Update();
+        }
+
         private void buttonCancel_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -56,10 +81,23 @@ namespace csvQUICKmap
             List<double> map = new List<double>();
             List<double> lambda = new List<double>();
 
+            //creates array to store cells of final .csv matrix
+            double[,,] cells = new double[25,26,2];
+
             //populate lists with data
             foreach (string filename in filenames)
             {
-                StreamReader reader = new StreamReader(File.OpenRead(filename));
+                StreamReader reader = null;
+                try
+                {
+                    reader = new StreamReader(File.OpenRead(filename));
+                }
+                catch (IOException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    return;
+                }
+
                 string line = reader.ReadLine();
                 while (!reader.EndOfStream)
                 {
@@ -71,6 +109,7 @@ namespace csvQUICKmap
                     lambda.Add(Convert.ToDouble(values[10]));
                 }
                 reader.Close();
+                
             }
 
             //Generate map of data
@@ -80,20 +119,20 @@ namespace csvQUICKmap
                 int rpmIndex = (int)(rpm[i]/250);
                 int tpsIndex = (int)(tps[i]/4);
                 int mapIndex = (int)((map[i] - 2.5)/0.5);
-                if (Y_Value_DropDown.Text == "TPS   (%)")
+                if (Y_Value_DropDown.Text == "TPS   (%)") //throttle position being used 
                 {
                     cells[rpmIndex, tpsIndex, 0] += 1;
                     cells[rpmIndex, tpsIndex, 1] += lambda[i];
                 }
-                else
+                else  // MAP Sensor being used
                 {
-                    cells[rpmIndex, tpsIndex, 0] += 1;
-                    cells[rpmIndex, tpsIndex, 1] += lambda[i];
+                    cells[rpmIndex, mapIndex, 0] += 1;
+                    cells[rpmIndex, mapIndex, 1] += lambda[i];
                 }
             }
 
             //generate unique filepath that (current local time)
-            string outputFilePath = @"C:/Users\Mobile Wind Tunnel/Desktop/Scott's Tunes/Data Aquisition/convertedFiles/output.csv";
+            string outputFilePath = @"../../../Outputs/output.csv";
             StringBuilder csv = new StringBuilder();
 
             for(int i = 26; i >= 0; i--)
@@ -156,15 +195,36 @@ namespace csvQUICKmap
                 }
             }
 
-            File.WriteAllText(outputFilePath.ToString(), csv.ToString());
+            try
+            {
+                File.WriteAllText(outputFilePath.ToString(), csv.ToString());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+
 
             MessageBox.Show(string.Format("File written to {0}",outputFilePath));
         }
 
         private void buttonRemove_Click(object sender, EventArgs e)
         {
-            filenames.Remove(listBox1.SelectedItem.ToString());
-            listBox1.Update();
+            if (pedFile.Count > 0)
+            {
+                pedFile.Remove(listBox2.SelectedItem.ToString());
+                listBox2.Update();
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (filenames.Count > 0)
+            {
+                filenames.Remove(listBox1.SelectedItem.ToString());
+                listBox1.Update();
+            }
         }
     }
 
