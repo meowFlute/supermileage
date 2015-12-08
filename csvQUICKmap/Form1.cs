@@ -133,11 +133,13 @@ namespace csvQUICKmap
             }
 
             //generate unique filepath that (current local time)
-            #if DEBUG   //debug output
+#if DEBUG   //debug output
             string outputFilePath = @"../../../Outputs/Measured Lambda Table.csv";
-            #else       //release output
+#else       //release output
             //TODO put a different output for the release build here
-            #endif
+            string outputFilePath = @"C:/Users/Mobile Wind Tunnel/Desktop/Scott's Tunes/Data Aquisition/convertedFiles/Measured Lambda Table.csv";
+            
+#endif
 
             StringBuilder csv = new StringBuilder();
 
@@ -344,11 +346,11 @@ namespace csvQUICKmap
                 }
             }
 
-            #if DEBUG   //debug output
+#if DEBUG   //debug output
             string outputFilePath = @"../../../Outputs/Suggested Fuel Table.csv";
-            #else       //release output
-            //TODO put a different output for the release build here
-            #endif
+#else       //release output
+            string outputFilePath = @"C:/Users/Mobile Wind Tunnel/Desktop/Scott's Tunes/Data Aquisition/convertedFiles/Suggested Fuel Table.csv";
+#endif
 
             StringBuilder csv = new StringBuilder();
 
@@ -431,8 +433,13 @@ namespace csvQUICKmap
         {
             Microsoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();
             excel.Visible = true;
-            excel.Workbooks.Open(@"C:/scott/csvQUICKplot/git/Outputs/Suggested Fuel Table.csv");
-            excel.Workbooks.Open(@"C:/scott/csvQUICKplot/git/Outputs/Measured Lambda Table.csv");
+#if DEBUG
+            //this would be the path on my pace lab computer where I actually work on this
+#else
+            //just plan on running release on the supermileage laptop
+            excel.Workbooks.Open(@"C:/Users/Mobile Wind Tunnel/Desktop/Scott's Tunes/Data Aquisition/convertedFiles/Suggested Fuel Table.csv");
+            excel.Workbooks.Open(@"C:/Users/Mobile Wind Tunnel/Desktop/Scott's Tunes/Data Aquisition/convertedFiles/Measured Lambda Table.csv");
+#endif
         }
     }
 
