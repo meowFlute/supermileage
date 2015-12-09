@@ -117,7 +117,12 @@ namespace csvQUICKmap
             for(int i = 0; i < lambda.Count; i++)
             {
                 //casting as an int truncates, which is what we want I'm pretty sure.
-                int rpmIndex = (int)(rpm[i]/250);
+                int rpmIndex = 0;
+                if (textBox1.Text != null)
+                    rpmIndex = (int)(rpm[i] / Convert.ToUInt32(textBox1.Text));
+                else
+                    MessageBox.Show("put a number into the RPM step size box");
+                    return;
                 int tpsIndex = (int)(tps[i]/4);
                 int mapIndex = (int)((map[i] - 2.5)/0.5);
                 if (Y_Value_DropDown.Text == "TPS   (%)") //throttle position being used 
@@ -155,11 +160,11 @@ namespace csvQUICKmap
                         }
                         if(j != 24)
                         {
-                            csv.Append(string.Format("{0}, ", (j * 250).ToString()));
+                            csv.Append(string.Format("{0}, ", (j * Convert.ToUInt32(textBox1.Text)).ToString()));
                         }
                         else if(j == 24)
                         {
-                            csv.Append(string.Format("{0}{1} ", (j * 250).ToString(), Environment.NewLine));
+                            csv.Append(string.Format("{0}{1} ", (j * Convert.ToUInt32(textBox1.Text)).ToString(), Environment.NewLine));
                         }
                     }
                     else
