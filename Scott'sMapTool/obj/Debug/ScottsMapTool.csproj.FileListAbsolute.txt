@@ -1,0 +1,14 @@
+C:\Users\Scott\Documents\supermileage\Scott'sMapTool\obj\Debug\MainWindow.g.cs
+C:\Users\Scott\Documents\supermileage\Scott'sMapTool\obj\Debug\App.g.cs
+C:\Users\Scott\Documents\supermileage\Scott'sMapTool\bin\Debug\ScottsMapTool.exe.config
+C:\Users\Scott\Documents\supermileage\Scott'sMapTool\bin\Debug\ScottsMapTool.exe
+C:\Users\Scott\Documents\supermileage\Scott'sMapTool\bin\Debug\ScottsMapTool.pdb
+C:\Users\Scott\Documents\supermileage\Scott'sMapTool\obj\Debug\ScottsMapTool_MarkupCompile.cache
+C:\Users\Scott\Documents\supermileage\Scott'sMapTool\obj\Debug\ScottsMapTool_MarkupCompile.lref
+C:\Users\Scott\Documents\supermileage\Scott'sMapTool\obj\Debug\MainWindow.baml
+C:\Users\Scott\Documents\supermileage\Scott'sMapTool\obj\Debug\ScottsMapTool.g.resources
+C:\Users\Scott\Documents\supermileage\Scott'sMapTool\obj\Debug\ScottsMapTool.Properties.Resources.resources
+C:\Users\Scott\Documents\supermileage\Scott'sMapTool\obj\Debug\ScottsMapTool.csproj.GenerateResource.Cache
+C:\Users\Scott\Documents\supermileage\Scott'sMapTool\obj\Debug\ScottsMapTool.exe
+C:\Users\Scott\Documents\supermileage\Scott'sMapTool\obj\Debug\ScottsMapTool.pdb
+C:\Users\Scott\Documents\supermileage\Scott'sMapTool\obj\Debug\ScottsMapTool.csprojResolveAssemblyReference.cache

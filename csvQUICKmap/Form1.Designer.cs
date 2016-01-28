@@ -119,10 +119,6 @@
             this.listBox1.Size = new System.Drawing.Size(427, 95);
             this.listBox1.TabIndex = 8;
             // 
-            // form1BindingSource
-            // 
-            this.form1BindingSource.DataSource = typeof(csvQUICKmap.Form1);
-            // 
             // comboBox2
             // 
             this.comboBox2.FormattingEnabled = true;

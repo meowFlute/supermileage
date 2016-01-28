@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2013 for Windows Desktop
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "csvQUICKmap", "csvQUICKmap\csvQUICKmap.csproj", "{BBBF701A-467C-4FCC-A7A0-9C8175656E66}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScottsMapTool", "Scott'sMapTool\ScottsMapTool.csproj", "{E797F2A2-29E6-45DB-BE7A-26CEF2D4D35E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{BBBF701A-467C-4FCC-A7A0-9C8175656E66}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BBBF701A-467C-4FCC-A7A0-9C8175656E66}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BBBF701A-467C-4FCC-A7A0-9C8175656E66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E797F2A2-29E6-45DB-BE7A-26CEF2D4D35E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E797F2A2-29E6-45DB-BE7A-26CEF2D4D35E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E797F2A2-29E6-45DB-BE7A-26CEF2D4D35E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E797F2A2-29E6-45DB-BE7A-26CEF2D4D35E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,8 @@
+C:\Users\Scott\Documents\supermileage\Scott'sMapTool\bin\Debug\Scott'sMapTool.exe.config
+C:\Users\Scott\Documents\supermileage\Scott'sMapTool\obj\Debug\Scott'sMapTool.csprojResolveAssemblyReference.cache
+C:\Users\Scott\Documents\supermileage\Scott'sMapTool\obj\Debug\MainWindow.g.cs
+C:\Users\Scott\Documents\supermileage\Scott'sMapTool\obj\Debug\App.g.cs
+C:\Users\Scott\Documents\supermileage\Scott'sMapTool\obj\Debug\Scott'sMapTool_MarkupCompile.cache
+C:\Users\Scott\Documents\supermileage\Scott'sMapTool\obj\Debug\Scott'sMapTool_MarkupCompile.lref
+C:\Users\Scott\Documents\supermileage\Scott'sMapTool\obj\Debug\Scott'sMapTool.exe
+C:\Users\Scott\Documents\supermileage\Scott'sMapTool\obj\Debug\Scott'sMapTool.pdb
