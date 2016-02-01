@@ -284,17 +284,105 @@ namespace Scott_sMapTool
 
         private void Show_LambdaAverages_Click(object sender, RoutedEventArgs e)
         {
-            lambdaAverageTable = new ObservableCollection<GridRowObject>(NewCopy(openedLambdaDictionary[lambdaList.First()]));
+            averageLambdaTables();
             table = new ObservableCollection<GridRowObject>(NewCopy(lambdaAverageTable));
             dataGrid1.ItemsSource = table;
         }
-                #endregion
+        #endregion
 
-            #endregion
+        #endregion
 
         #endregion
 
         #region Private
+        //this function does the leg work for averaging the tables we have loaded
+        private void averageLambdaTables()
+        {
+            lambdaAverageTable = new ObservableCollection<GridRowObject>(NewCopy(emptyTable));
+            foreach(KeyValuePair<string, ObservableCollection<GridRowObject>> pair in openedLambdaDictionary.ToList())
+            {
+                //pair.Value is the observable collection of the open file
+                for(int tpsIndex = 1; tpsIndex < 27; tpsIndex++)
+                {
+                    if (pair.Value[tpsIndex].B != null && lambdaAverageTable[tpsIndex].B == null)
+                        lambdaAverageTable[tpsIndex].B = 0.0;
+                    lambdaAverageTable[tpsIndex].B += pair.Value[tpsIndex].B / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].C != null && lambdaAverageTable[tpsIndex].C == null)
+                        lambdaAverageTable[tpsIndex].C = 0.0;
+                    lambdaAverageTable[tpsIndex].C += pair.Value[tpsIndex].C / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].D != null && lambdaAverageTable[tpsIndex].D == null)
+                        lambdaAverageTable[tpsIndex].D = 0.0;
+                    lambdaAverageTable[tpsIndex].D += pair.Value[tpsIndex].D / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].E != null && lambdaAverageTable[tpsIndex].E == null)
+                        lambdaAverageTable[tpsIndex].E = 0.0;
+                    lambdaAverageTable[tpsIndex].E += pair.Value[tpsIndex].E / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].F != null && lambdaAverageTable[tpsIndex].F == null)
+                        lambdaAverageTable[tpsIndex].F = 0.0;
+                    lambdaAverageTable[tpsIndex].F += pair.Value[tpsIndex].F / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].G != null && lambdaAverageTable[tpsIndex].G == null)
+                        lambdaAverageTable[tpsIndex].G = 0.0;
+                    lambdaAverageTable[tpsIndex].G += pair.Value[tpsIndex].G / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].H != null && lambdaAverageTable[tpsIndex].H == null)
+                        lambdaAverageTable[tpsIndex].H = 0.0;
+                    lambdaAverageTable[tpsIndex].H += pair.Value[tpsIndex].H / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].I != null && lambdaAverageTable[tpsIndex].I == null)
+                        lambdaAverageTable[tpsIndex].I = 0.0;
+                    lambdaAverageTable[tpsIndex].I += pair.Value[tpsIndex].I / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].J != null && lambdaAverageTable[tpsIndex].J == null)
+                        lambdaAverageTable[tpsIndex].J = 0.0;
+                    lambdaAverageTable[tpsIndex].J += pair.Value[tpsIndex].J / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].K != null && lambdaAverageTable[tpsIndex].K == null)
+                        lambdaAverageTable[tpsIndex].K = 0.0;
+                    lambdaAverageTable[tpsIndex].K += pair.Value[tpsIndex].K / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].L != null && lambdaAverageTable[tpsIndex].L == null)
+                        lambdaAverageTable[tpsIndex].L = 0.0;
+                    lambdaAverageTable[tpsIndex].L += pair.Value[tpsIndex].L / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].M != null && lambdaAverageTable[tpsIndex].M == null)
+                        lambdaAverageTable[tpsIndex].M = 0.0;
+                    lambdaAverageTable[tpsIndex].M += pair.Value[tpsIndex].M / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].N != null && lambdaAverageTable[tpsIndex].N == null)
+                        lambdaAverageTable[tpsIndex].N = 0.0;
+                    lambdaAverageTable[tpsIndex].N += pair.Value[tpsIndex].N / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].O != null && lambdaAverageTable[tpsIndex].O == null)
+                        lambdaAverageTable[tpsIndex].O = 0.0;
+                    lambdaAverageTable[tpsIndex].O += pair.Value[tpsIndex].O / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].P != null && lambdaAverageTable[tpsIndex].P == null)
+                        lambdaAverageTable[tpsIndex].P = 0.0;
+                    lambdaAverageTable[tpsIndex].P += pair.Value[tpsIndex].P / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].Q != null && lambdaAverageTable[tpsIndex].Q == null)
+                        lambdaAverageTable[tpsIndex].Q = 0.0;
+                    lambdaAverageTable[tpsIndex].Q += pair.Value[tpsIndex].Q / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].R != null && lambdaAverageTable[tpsIndex].R == null)
+                        lambdaAverageTable[tpsIndex].R = 0.0;
+                    lambdaAverageTable[tpsIndex].R += pair.Value[tpsIndex].R / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].S != null && lambdaAverageTable[tpsIndex].S == null)
+                        lambdaAverageTable[tpsIndex].S = 0.0;
+                    lambdaAverageTable[tpsIndex].S += pair.Value[tpsIndex].S / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].T != null && lambdaAverageTable[tpsIndex].T == null)
+                        lambdaAverageTable[tpsIndex].T = 0.0;
+                    lambdaAverageTable[tpsIndex].T += pair.Value[tpsIndex].T / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].U != null && lambdaAverageTable[tpsIndex].U == null)
+                        lambdaAverageTable[tpsIndex].U = 0.0;
+                    lambdaAverageTable[tpsIndex].U += pair.Value[tpsIndex].U / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].V != null && lambdaAverageTable[tpsIndex].V == null)
+                        lambdaAverageTable[tpsIndex].V = 0.0;
+                    lambdaAverageTable[tpsIndex].V += pair.Value[tpsIndex].V / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].W != null && lambdaAverageTable[tpsIndex].W == null)
+                        lambdaAverageTable[tpsIndex].W = 0.0;
+                    lambdaAverageTable[tpsIndex].W += pair.Value[tpsIndex].W / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].X != null && lambdaAverageTable[tpsIndex].X == null)
+                        lambdaAverageTable[tpsIndex].X = 0.0;
+                    lambdaAverageTable[tpsIndex].X += pair.Value[tpsIndex].X / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].Y != null && lambdaAverageTable[tpsIndex].Y == null)
+                        lambdaAverageTable[tpsIndex].Y = 0.0;
+                    lambdaAverageTable[tpsIndex].Y += pair.Value[tpsIndex].Y / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].Z != null && lambdaAverageTable[tpsIndex].Z == null)
+                        lambdaAverageTable[tpsIndex].Z = 0.0;
+                    lambdaAverageTable[tpsIndex].Z += pair.Value[tpsIndex].Z / openedLambdaDictionary.Count;
+                }
+            }
+        }
+
         //this function makes it so we can copy by value and not by reference. We don't want the same object, just the same 
         private ObservableCollection<GridRowObject> NewCopy(ObservableCollection<GridRowObject> oldObservable)
         {
@@ -313,6 +401,7 @@ namespace Scott_sMapTool
             lambdaAverageTable = new ObservableCollection<GridRowObject>(NewCopy(emptyTable)); 
             baseTuneTable = new ObservableCollection<GridRowObject>(NewCopy(emptyTable)); 
             suggestedTuneTable = new ObservableCollection<GridRowObject>(NewCopy(emptyTable));
+            openedLambdaDictionary = new Dictionary<string, ObservableCollection<GridRowObject>>();
             dataGrid1.ItemsSource = table;
 
             //clear out the lists
