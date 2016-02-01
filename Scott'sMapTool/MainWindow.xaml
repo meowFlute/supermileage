@@ -10,7 +10,7 @@
         <DockPanel>
             <Menu DockPanel.Dock="Top" BorderBrush="LightGray" BorderThickness="1px">
                 <MenuItem Header="File">
-                    <MenuItem Header="New" >
+                    <MenuItem Header="New" Click="New_Click">
                         <MenuItem.Icon>
                             <Image Source="C:\Users\Scott\Documents\supermileage\Scott'sMapTool\resources\Custom-Icon-Design-Flatastic-8-Refresh.ico"/>
                         </MenuItem.Icon>
@@ -39,20 +39,20 @@
                     </MenuItem>
                     <MenuItem Header="Save As..."/>
                     <Separator/>
-                    <MenuItem Header="Exit" Click="MenuItem_Click">
+                    <MenuItem Header="Exit" Click="Close_Click">
                         <MenuItem.Icon>
                             <Image Source="C:\Users\Scott\Documents\supermileage\Scott'sMapTool\resources\application_exit.ico"/>
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Header="Show">
-                    <MenuItem Header="Base MAP (from .ped)">
+                    <MenuItem Header="Base MAP (from .ped)" x:Name="Show_BaseMap" Click="Show_BaseMap_Click">
                         <MenuItem.Icon>
                             <Image Source="C:\Users\Scott\Documents\supermileage\Scott'sMapTool\resources\Treetog-Junior-Performance-tools.ico"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="Suggested MAP"/>
-                    <MenuItem Header="Recorded Lambda Averages"/>
+                    <MenuItem Header="Suggested MAP" Click="Show_SuggestedMap_Click"/>
+                    <MenuItem Header="Recorded Lambda Averages" Click="Show_LambdaAverages_Click" />
                 </MenuItem>
                 <MenuItem Header="Edit">
                     <MenuItem Header="Lambda Files List">
@@ -87,8 +87,8 @@
                     </Grid.RowDefinitions>
                     <Label Content="Base Tune" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Column="0" Grid.Row="0" FontWeight="Bold"/>
                     <Label Content="Lambda Recordings In Use" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Column="1" Grid.Row="0" FontWeight="Bold"/>
-                    <ListBox Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="5,5,5,5" Height="60" />
-                    <ListBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="5,5,5,5" Height="60" />
+                    <ListBox x:Name="TuneListBox" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="5,5,5,5" Height="60" DragEnter="TuneListBox_DragEnter" Drop="TuneListBox_Drop" />
+                    <ListBox x:Name="LambdaListBox" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="5,5,5,5" Height="60" DragEnter="LambdaListBox_DragEnter" Drop="LambdaListBox_Drop" />
                 </Grid>
                 <DataGrid Grid.Row="1" AutoGenerateColumns="False" HorizontalAlignment="Stretch" Name="dataGrid1" VerticalAlignment="Stretch" HeadersVisibility="None" IsReadOnly="True">
                     <DataGrid.Columns>
