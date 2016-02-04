@@ -31,9 +31,13 @@ namespace Scott_sMapTool
         //Here is said dictionary, mapping the strings in the listboxes to full filepaths
         Dictionary<string, string> filepaths = new Dictionary<string, string>();
 
+        //this is the scaling factor for the averaged lambda data that we'll use to tune the engine
+        public double fuelScalingFactor = 1.0;
+
         #endregion
 
         #region Custom Classes
+
         public class GridRowObject:ICloneable
         {
             public double? A { get; set; }
@@ -196,7 +200,8 @@ namespace Scott_sMapTool
             filepaths.Add(filename, files[0]);
 
             ProcessPED();
-
+            if (lambdaList.Count > 0)   // if we updated the PED file and the lambda list has stuff in it 
+                ProcessSuggestedMAP();  // then we update the suggested map too since we can
             /* this is an example of how to use the dictionary we just populated. Pretty handy, huh? Just look it up
 
             string message = string.Format("the filepath for {0} is {1}", baseTune[0], filepaths[baseTune[0]]);
@@ -249,6 +254,11 @@ namespace Scott_sMapTool
                     }
                 }
             }
+
+            // after they are all in there, we set the average lambda data again. We do this everytime the list changes
+            averageLambdaTables();
+            if (baseTune.Count > 0)   // if we updated the PED file and the lambda list has stuff in it 
+                ProcessSuggestedMAP();  // then we update the suggested map too since we can
         }
             #endregion
 
@@ -267,9 +277,224 @@ namespace Scott_sMapTool
         {
             Close();
         }
-                #endregion
 
-                #region Show
+        private void Open_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+
+            dlg.Multiselect = true;
+            
+            dlg.Filter = "ECU Recorded Data (.csv)|*.csv|ECU MAP files (.ped)|*.ped";
+
+            bool? result = dlg.ShowDialog();
+
+            if (result == true)
+            {
+                foreach (string filename in dlg.FileNames)
+                {
+                    if (filename.Split('.').Last() == "csv")
+                    {
+                        string shortName = filename.Split('\\').Last();
+                        try
+                        {
+                            filepaths.Add(shortName, filename);
+                            lambdaList.Add(shortName);
+                            ProcessCSV(shortName);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(string.Format("You've hit an exception. Don't worry, this probably just means you tried to add a file that is already in the list. We won't add that one. If that is the case then the following message will say you already added that key. Here is the message: \n\n\"{0}\"", ex.Message));
+                        }
+                    }
+                    else if (filename.Split('.').Last() == "ped")
+                    {
+                        // for the base tune box we only want to have 1 tune, so we'll just replace it
+                        if (baseTune.Count > 0)
+                        {
+                            filepaths.Remove(baseTune[0]);
+                            baseTune.Clear();
+                        }
+
+                        //take only the first one even if they dragged more than one
+                        //Let's also strip off everything but the name
+                        string shortName = filename.Split('\\').Last();
+                        baseTune.Add(shortName);
+                        filepaths.Add(shortName, filename);
+
+                        ProcessPED();
+                        if (lambdaList.Count > 0)   // if we updated the PED file and the lambda list has stuff in it 
+                            ProcessSuggestedMAP();  // then we update the suggested map too since we can
+                        return;
+                    }
+                    else
+                        MessageBox.Show("You can only open .csv and .ped files\n-Love\n\nScott");
+                }
+
+                if (dlg.FileNames[0].Split('.').Last() == "csv")
+                {
+                    averageLambdaTables();
+                    if (baseTune.Count > 0)
+                        ProcessSuggestedMAP();
+                }
+            }
+        }
+
+        private void BaseTuneAdd_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+
+            dlg.Multiselect = true;
+
+            dlg.Filter = "ECU MAP files (.ped)|*.ped";
+
+            bool? result = dlg.ShowDialog();
+
+            if (result == true)
+            {
+                foreach (string filename in dlg.FileNames)
+                {
+                    if (filename.Split('.').Last() == "csv")
+                    {
+                        string shortName = filename.Split('\\').Last();
+                        try
+                        {
+                            filepaths.Add(shortName, filename);
+                            lambdaList.Add(shortName);
+                            ProcessCSV(shortName);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(string.Format("You've hit an exception. Don't worry, this probably just means you tried to add a file that is already in the list. We won't add that one. If that is the case then the following message will say you already added that key. Here is the message: \n\n\"{0}\"", ex.Message));
+                        }
+                    }
+                    else if (filename.Split('.').Last() == "ped")
+                    {
+                        // for the base tune box we only want to have 1 tune, so we'll just replace it
+                        if (baseTune.Count > 0)
+                        {
+                            filepaths.Remove(baseTune[0]);
+                            baseTune.Clear();
+                        }
+
+                        //take only the first one even if they dragged more than one
+                        //Let's also strip off everything but the name
+                        string shortName = filename.Split('\\').Last();
+                        baseTune.Add(shortName);
+                        filepaths.Add(shortName, filename);
+
+                        ProcessPED();
+                        if (lambdaList.Count > 0)   // if we updated the PED file and the lambda list has stuff in it 
+                            ProcessSuggestedMAP();  // then we update the suggested map too since we can
+                        return; //this way we only add one to our filepaths dictionary
+                    }
+                    else
+                        MessageBox.Show("You can only open .csv and .ped files\n-Love\n\nScott");
+                }
+
+                if (dlg.FileNames[0].Split('.').Last() == "csv")
+                {
+                    averageLambdaTables();
+                    if (baseTune.Count > 0)
+                        ProcessSuggestedMAP();
+                }
+            }
+        }
+
+        private void BaseTuneRemove_Click(object sender, RoutedEventArgs e)
+        {
+            if(baseTune.Count > 0)
+            {
+                string[] itemsToRemove = new string[TuneListBox.SelectedItems.Count];
+                TuneListBox.SelectedItems.CopyTo(itemsToRemove, 0);
+
+                foreach(string item in itemsToRemove)
+                {
+                    filepaths.Remove(item);
+                    baseTune.Remove(item);
+                    baseTuneTable = new ObservableCollection<GridRowObject>(NewCopy(emptyTable));
+                    suggestedTuneTable = new ObservableCollection<GridRowObject>(NewCopy(emptyTable));
+                }
+            }
+        }
+
+        private void LambdRemove_Click(object sender, RoutedEventArgs e)
+        {
+            if(lambdaList.Count > 0)
+            {
+                string[] itemsToRemove = new string[LambdaListBox.SelectedItems.Count];
+                LambdaListBox.SelectedItems.CopyTo(itemsToRemove, 0);
+
+                foreach(string item in itemsToRemove)
+                {
+                    filepaths.Remove(item);
+                    openedLambdaDictionary.Remove(item);
+                    lambdaList.Remove(item);
+                    averageLambdaTables();
+                    if (baseTune.Count > 0)
+                        ProcessSuggestedMAP();
+                }
+            }
+        }
+
+        private void LambdaAdd_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+
+            dlg.Multiselect = true;
+
+            dlg.Filter = "ECU Recorded Data (.csv)|*.csv";
+
+            bool? result = dlg.ShowDialog();
+
+            if (result == true)
+            {
+                foreach (string filename in dlg.FileNames)
+                {
+                    if (filename.Split('.').Last() == "csv")
+                    {
+                        string shortName = filename.Split('\\').Last();
+                        try
+                        {
+                            filepaths.Add(shortName, filename);
+                            lambdaList.Add(shortName);
+                            ProcessCSV(shortName);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(string.Format("You've hit an exception. Don't worry, this probably just means you tried to add a file that is already in the list. We won't add that one. If that is the case then the following message will say you already added that key. Here is the message: \n\n\"{0}\"", ex.Message));
+                        }
+                    }
+                    else if (filename.Split('.').Last() == "ped")
+                    {
+                        // for the base tune box we only want to have 1 tune, so we'll just replace it
+                        if (baseTune.Count > 0)
+                            baseTune.Clear();
+
+                        //take only the first one even if they dragged more than one
+                        //Let's also strip off everything but the name
+                        string shortName = filename.Split('\\').Last();
+                        baseTune.Add(shortName);
+                        filepaths.Add(shortName, filename);
+
+                        ProcessPED();
+                        if (lambdaList.Count > 0)   // if we updated the PED file and the lambda list has stuff in it 
+                            ProcessSuggestedMAP();  // then we update the suggested map too since we can
+                    }
+                    else
+                        MessageBox.Show("You can only open .csv and .ped files\n-Love\n\nScott");
+                }
+
+                if (dlg.FileNames[0].Split('.').Last() == "csv")
+                {
+                    averageLambdaTables();
+                    if (baseTune.Count > 0)
+                        ProcessSuggestedMAP();
+                }
+            }
+        }
+        #endregion
+
+        #region Show
         private void Show_BaseMap_Click(object sender, RoutedEventArgs e)
         {
             table = new ObservableCollection<GridRowObject>(NewCopy(baseTuneTable));
@@ -284,7 +509,6 @@ namespace Scott_sMapTool
 
         private void Show_LambdaAverages_Click(object sender, RoutedEventArgs e)
         {
-            averageLambdaTables();
             table = new ObservableCollection<GridRowObject>(NewCopy(lambdaAverageTable));
             dataGrid1.ItemsSource = table;
         }
@@ -304,82 +528,188 @@ namespace Scott_sMapTool
                 //pair.Value is the observable collection of the open file
                 for(int tpsIndex = 1; tpsIndex < 27; tpsIndex++)
                 {
+                    // a null + double addition results in null, so we don't want to add a null and we need to check for it
+
+                    // field B
                     if (pair.Value[tpsIndex].B != null && lambdaAverageTable[tpsIndex].B == null)
                         lambdaAverageTable[tpsIndex].B = 0.0;
-                    lambdaAverageTable[tpsIndex].B += pair.Value[tpsIndex].B / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].B != null)
+                        lambdaAverageTable[tpsIndex].B += pair.Value[tpsIndex].B / openedLambdaDictionary.Count;
+
+                    // field C
                     if (pair.Value[tpsIndex].C != null && lambdaAverageTable[tpsIndex].C == null)
                         lambdaAverageTable[tpsIndex].C = 0.0;
-                    lambdaAverageTable[tpsIndex].C += pair.Value[tpsIndex].C / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].C != null)
+                        lambdaAverageTable[tpsIndex].C += pair.Value[tpsIndex].C / openedLambdaDictionary.Count;
+
+                    // field D
                     if (pair.Value[tpsIndex].D != null && lambdaAverageTable[tpsIndex].D == null)
                         lambdaAverageTable[tpsIndex].D = 0.0;
-                    lambdaAverageTable[tpsIndex].D += pair.Value[tpsIndex].D / openedLambdaDictionary.Count;
-                    if (pair.Value[tpsIndex].E != null && lambdaAverageTable[tpsIndex].E == null)
+                    if (pair.Value[tpsIndex].D != null)
+                        lambdaAverageTable[tpsIndex].D += pair.Value[tpsIndex].D / openedLambdaDictionary.Count;
+
+                    // field E
+                    if (pair.Value[tpsIndex].E != null && lambdaAverageTable[tpsIndex].E == null) 
                         lambdaAverageTable[tpsIndex].E = 0.0;
-                    lambdaAverageTable[tpsIndex].E += pair.Value[tpsIndex].E / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].E != null) 
+                        lambdaAverageTable[tpsIndex].E += pair.Value[tpsIndex].E / openedLambdaDictionary.Count;
+
+                    // field F
                     if (pair.Value[tpsIndex].F != null && lambdaAverageTable[tpsIndex].F == null)
                         lambdaAverageTable[tpsIndex].F = 0.0;
-                    lambdaAverageTable[tpsIndex].F += pair.Value[tpsIndex].F / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].F != null)
+                        lambdaAverageTable[tpsIndex].F += pair.Value[tpsIndex].F / openedLambdaDictionary.Count;
+
+                    // field G
                     if (pair.Value[tpsIndex].G != null && lambdaAverageTable[tpsIndex].G == null)
                         lambdaAverageTable[tpsIndex].G = 0.0;
-                    lambdaAverageTable[tpsIndex].G += pair.Value[tpsIndex].G / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].G != null)
+                        lambdaAverageTable[tpsIndex].G += pair.Value[tpsIndex].G / openedLambdaDictionary.Count;
+
+                    // field H
                     if (pair.Value[tpsIndex].H != null && lambdaAverageTable[tpsIndex].H == null)
                         lambdaAverageTable[tpsIndex].H = 0.0;
-                    lambdaAverageTable[tpsIndex].H += pair.Value[tpsIndex].H / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].H != null)
+                        lambdaAverageTable[tpsIndex].H += pair.Value[tpsIndex].H / openedLambdaDictionary.Count;
+
+                    // field I
                     if (pair.Value[tpsIndex].I != null && lambdaAverageTable[tpsIndex].I == null)
                         lambdaAverageTable[tpsIndex].I = 0.0;
-                    lambdaAverageTable[tpsIndex].I += pair.Value[tpsIndex].I / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].I != null)
+                        lambdaAverageTable[tpsIndex].I += pair.Value[tpsIndex].I / openedLambdaDictionary.Count;
+
+                    // field J
                     if (pair.Value[tpsIndex].J != null && lambdaAverageTable[tpsIndex].J == null)
                         lambdaAverageTable[tpsIndex].J = 0.0;
-                    lambdaAverageTable[tpsIndex].J += pair.Value[tpsIndex].J / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].J != null)
+                        lambdaAverageTable[tpsIndex].J += pair.Value[tpsIndex].J / openedLambdaDictionary.Count;
+
+                    // field K
                     if (pair.Value[tpsIndex].K != null && lambdaAverageTable[tpsIndex].K == null)
                         lambdaAverageTable[tpsIndex].K = 0.0;
-                    lambdaAverageTable[tpsIndex].K += pair.Value[tpsIndex].K / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].K != null)
+                        lambdaAverageTable[tpsIndex].K += pair.Value[tpsIndex].K / openedLambdaDictionary.Count;
+
+                    // field L
                     if (pair.Value[tpsIndex].L != null && lambdaAverageTable[tpsIndex].L == null)
                         lambdaAverageTable[tpsIndex].L = 0.0;
-                    lambdaAverageTable[tpsIndex].L += pair.Value[tpsIndex].L / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].L != null)
+                        lambdaAverageTable[tpsIndex].L += pair.Value[tpsIndex].L / openedLambdaDictionary.Count;
+
+                    // field M
                     if (pair.Value[tpsIndex].M != null && lambdaAverageTable[tpsIndex].M == null)
                         lambdaAverageTable[tpsIndex].M = 0.0;
-                    lambdaAverageTable[tpsIndex].M += pair.Value[tpsIndex].M / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].M != null)
+                        lambdaAverageTable[tpsIndex].M += pair.Value[tpsIndex].M / openedLambdaDictionary.Count;
+
+                    // field N
                     if (pair.Value[tpsIndex].N != null && lambdaAverageTable[tpsIndex].N == null)
                         lambdaAverageTable[tpsIndex].N = 0.0;
-                    lambdaAverageTable[tpsIndex].N += pair.Value[tpsIndex].N / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].N != null)
+                        lambdaAverageTable[tpsIndex].N += pair.Value[tpsIndex].N / openedLambdaDictionary.Count;
+
+                    // field O
                     if (pair.Value[tpsIndex].O != null && lambdaAverageTable[tpsIndex].O == null)
                         lambdaAverageTable[tpsIndex].O = 0.0;
-                    lambdaAverageTable[tpsIndex].O += pair.Value[tpsIndex].O / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].O != null)
+                        lambdaAverageTable[tpsIndex].O += pair.Value[tpsIndex].O / openedLambdaDictionary.Count;
+
+                    // field P
                     if (pair.Value[tpsIndex].P != null && lambdaAverageTable[tpsIndex].P == null)
                         lambdaAverageTable[tpsIndex].P = 0.0;
-                    lambdaAverageTable[tpsIndex].P += pair.Value[tpsIndex].P / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].P != null)
+                        lambdaAverageTable[tpsIndex].P += pair.Value[tpsIndex].P / openedLambdaDictionary.Count;
+
+                    // field Q
                     if (pair.Value[tpsIndex].Q != null && lambdaAverageTable[tpsIndex].Q == null)
                         lambdaAverageTable[tpsIndex].Q = 0.0;
-                    lambdaAverageTable[tpsIndex].Q += pair.Value[tpsIndex].Q / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].Q != null)
+                        lambdaAverageTable[tpsIndex].Q += pair.Value[tpsIndex].Q / openedLambdaDictionary.Count;
+
+                    // field R
                     if (pair.Value[tpsIndex].R != null && lambdaAverageTable[tpsIndex].R == null)
                         lambdaAverageTable[tpsIndex].R = 0.0;
-                    lambdaAverageTable[tpsIndex].R += pair.Value[tpsIndex].R / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].R != null)
+                        lambdaAverageTable[tpsIndex].R += pair.Value[tpsIndex].R / openedLambdaDictionary.Count;
+
+                    // field S
                     if (pair.Value[tpsIndex].S != null && lambdaAverageTable[tpsIndex].S == null)
                         lambdaAverageTable[tpsIndex].S = 0.0;
-                    lambdaAverageTable[tpsIndex].S += pair.Value[tpsIndex].S / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].S != null)
+                        lambdaAverageTable[tpsIndex].S += pair.Value[tpsIndex].S / openedLambdaDictionary.Count;
+
+                    // field T
                     if (pair.Value[tpsIndex].T != null && lambdaAverageTable[tpsIndex].T == null)
                         lambdaAverageTable[tpsIndex].T = 0.0;
-                    lambdaAverageTable[tpsIndex].T += pair.Value[tpsIndex].T / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].T != null)
+                        lambdaAverageTable[tpsIndex].T += pair.Value[tpsIndex].T / openedLambdaDictionary.Count;
+
+                    // field U
                     if (pair.Value[tpsIndex].U != null && lambdaAverageTable[tpsIndex].U == null)
                         lambdaAverageTable[tpsIndex].U = 0.0;
-                    lambdaAverageTable[tpsIndex].U += pair.Value[tpsIndex].U / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].U != null)
+                        lambdaAverageTable[tpsIndex].U += pair.Value[tpsIndex].U / openedLambdaDictionary.Count;
+
+                    // field V
                     if (pair.Value[tpsIndex].V != null && lambdaAverageTable[tpsIndex].V == null)
                         lambdaAverageTable[tpsIndex].V = 0.0;
-                    lambdaAverageTable[tpsIndex].V += pair.Value[tpsIndex].V / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].V != null)
+                        lambdaAverageTable[tpsIndex].V += pair.Value[tpsIndex].V / openedLambdaDictionary.Count;
+
+                    // field W
                     if (pair.Value[tpsIndex].W != null && lambdaAverageTable[tpsIndex].W == null)
                         lambdaAverageTable[tpsIndex].W = 0.0;
-                    lambdaAverageTable[tpsIndex].W += pair.Value[tpsIndex].W / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].W != null)
+                        lambdaAverageTable[tpsIndex].W += pair.Value[tpsIndex].W / openedLambdaDictionary.Count;
+
+                    // field X
                     if (pair.Value[tpsIndex].X != null && lambdaAverageTable[tpsIndex].X == null)
                         lambdaAverageTable[tpsIndex].X = 0.0;
-                    lambdaAverageTable[tpsIndex].X += pair.Value[tpsIndex].X / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].X != null)
+                        lambdaAverageTable[tpsIndex].X += pair.Value[tpsIndex].X / openedLambdaDictionary.Count;
+
+                    // field Y
                     if (pair.Value[tpsIndex].Y != null && lambdaAverageTable[tpsIndex].Y == null)
                         lambdaAverageTable[tpsIndex].Y = 0.0;
-                    lambdaAverageTable[tpsIndex].Y += pair.Value[tpsIndex].Y / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].Y != null)
+                        lambdaAverageTable[tpsIndex].Y += pair.Value[tpsIndex].Y / openedLambdaDictionary.Count;
+
+                    // field Z
                     if (pair.Value[tpsIndex].Z != null && lambdaAverageTable[tpsIndex].Z == null)
                         lambdaAverageTable[tpsIndex].Z = 0.0;
-                    lambdaAverageTable[tpsIndex].Z += pair.Value[tpsIndex].Z / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].Z != null)
+                        lambdaAverageTable[tpsIndex].Z += pair.Value[tpsIndex].Z / openedLambdaDictionary.Count;
                 }
+            }
+
+            for (int y = 1; y <= 26; y++)
+            {
+                // if the value is null, return a double? with a null value, otherwise return the same value but rounded to 3 decimal places
+                lambdaAverageTable[27 - y].B = !lambdaAverageTable[27 - y].B.HasValue ? (double?)null : Math.Round((double)lambdaAverageTable[27 - y].B, 3);
+                lambdaAverageTable[27 - y].C = !lambdaAverageTable[27 - y].C.HasValue ? (double?)null : Math.Round((double)lambdaAverageTable[27 - y].C, 3);
+                lambdaAverageTable[27 - y].D = !lambdaAverageTable[27 - y].D.HasValue ? (double?)null : Math.Round((double)lambdaAverageTable[27 - y].D, 3);
+                lambdaAverageTable[27 - y].E = !lambdaAverageTable[27 - y].E.HasValue ? (double?)null : Math.Round((double)lambdaAverageTable[27 - y].E, 3);
+                lambdaAverageTable[27 - y].F = !lambdaAverageTable[27 - y].F.HasValue ? (double?)null : Math.Round((double)lambdaAverageTable[27 - y].F, 3);
+                lambdaAverageTable[27 - y].G = !lambdaAverageTable[27 - y].G.HasValue ? (double?)null : Math.Round((double)lambdaAverageTable[27 - y].G, 3);
+                lambdaAverageTable[27 - y].H = !lambdaAverageTable[27 - y].H.HasValue ? (double?)null : Math.Round((double)lambdaAverageTable[27 - y].H, 3);
+                lambdaAverageTable[27 - y].I = !lambdaAverageTable[27 - y].I.HasValue ? (double?)null : Math.Round((double)lambdaAverageTable[27 - y].I, 3);
+                lambdaAverageTable[27 - y].J = !lambdaAverageTable[27 - y].J.HasValue ? (double?)null : Math.Round((double)lambdaAverageTable[27 - y].J, 3);
+                lambdaAverageTable[27 - y].K = !lambdaAverageTable[27 - y].K.HasValue ? (double?)null : Math.Round((double)lambdaAverageTable[27 - y].K, 3);
+                lambdaAverageTable[27 - y].L = !lambdaAverageTable[27 - y].L.HasValue ? (double?)null : Math.Round((double)lambdaAverageTable[27 - y].L, 3);
+                lambdaAverageTable[27 - y].M = !lambdaAverageTable[27 - y].M.HasValue ? (double?)null : Math.Round((double)lambdaAverageTable[27 - y].M, 3);
+                lambdaAverageTable[27 - y].N = !lambdaAverageTable[27 - y].N.HasValue ? (double?)null : Math.Round((double)lambdaAverageTable[27 - y].N, 3);
+                lambdaAverageTable[27 - y].O = !lambdaAverageTable[27 - y].O.HasValue ? (double?)null : Math.Round((double)lambdaAverageTable[27 - y].O, 3);
+                lambdaAverageTable[27 - y].P = !lambdaAverageTable[27 - y].P.HasValue ? (double?)null : Math.Round((double)lambdaAverageTable[27 - y].P, 3);
+                lambdaAverageTable[27 - y].Q = !lambdaAverageTable[27 - y].Q.HasValue ? (double?)null : Math.Round((double)lambdaAverageTable[27 - y].Q, 3);
+                lambdaAverageTable[27 - y].R = !lambdaAverageTable[27 - y].R.HasValue ? (double?)null : Math.Round((double)lambdaAverageTable[27 - y].R, 3);
+                lambdaAverageTable[27 - y].S = !lambdaAverageTable[27 - y].S.HasValue ? (double?)null : Math.Round((double)lambdaAverageTable[27 - y].S, 3);
+                lambdaAverageTable[27 - y].T = !lambdaAverageTable[27 - y].T.HasValue ? (double?)null : Math.Round((double)lambdaAverageTable[27 - y].T, 3);
+                lambdaAverageTable[27 - y].U = !lambdaAverageTable[27 - y].U.HasValue ? (double?)null : Math.Round((double)lambdaAverageTable[27 - y].U, 3);
+                lambdaAverageTable[27 - y].V = !lambdaAverageTable[27 - y].V.HasValue ? (double?)null : Math.Round((double)lambdaAverageTable[27 - y].V, 3);
+                lambdaAverageTable[27 - y].W = !lambdaAverageTable[27 - y].W.HasValue ? (double?)null : Math.Round((double)lambdaAverageTable[27 - y].W, 3);
+                lambdaAverageTable[27 - y].X = !lambdaAverageTable[27 - y].X.HasValue ? (double?)null : Math.Round((double)lambdaAverageTable[27 - y].X, 3);
+                lambdaAverageTable[27 - y].Y = !lambdaAverageTable[27 - y].Y.HasValue ? (double?)null : Math.Round((double)lambdaAverageTable[27 - y].Y, 3);
+                lambdaAverageTable[27 - y].Z = !lambdaAverageTable[27 - y].Z.HasValue ? (double?)null : Math.Round((double)lambdaAverageTable[27 - y].Z, 3);
             }
         }
 
@@ -683,9 +1013,43 @@ namespace Scott_sMapTool
                 baseTuneTable[27-y].Y = Math.Round(fuelTable[23, y - 1], 2);
                 baseTuneTable[27-y].Z = Math.Round(fuelTable[24, y - 1], 2);
             }
-            
         }
 
+        private void ProcessSuggestedMAP()
+        {
+            //start with a clean slate
+            suggestedTuneTable = new ObservableCollection<GridRowObject>(NewCopy(emptyTable));
+
+            for (int y = 1; y <= 26; y++)
+            {
+                // if the value is null, return a double? with a null value, otherwise return the same value but rounded to 3 decimal places
+                suggestedTuneTable[27 - y].B = !lambdaAverageTable[27 - y].B.HasValue ? baseTuneTable[27 - y].B : Math.Round((double)(lambdaAverageTable[27 - y].B * baseTuneTable[27 - y].B), 3);
+                suggestedTuneTable[27 - y].C = !lambdaAverageTable[27 - y].C.HasValue ? baseTuneTable[27 - y].C : Math.Round((double)(lambdaAverageTable[27 - y].C * baseTuneTable[27 - y].C), 3);
+                suggestedTuneTable[27 - y].D = !lambdaAverageTable[27 - y].D.HasValue ? baseTuneTable[27 - y].D : Math.Round((double)(lambdaAverageTable[27 - y].D * baseTuneTable[27 - y].D), 3);
+                suggestedTuneTable[27 - y].E = !lambdaAverageTable[27 - y].E.HasValue ? baseTuneTable[27 - y].E : Math.Round((double)(lambdaAverageTable[27 - y].E * baseTuneTable[27 - y].E), 3);
+                suggestedTuneTable[27 - y].F = !lambdaAverageTable[27 - y].F.HasValue ? baseTuneTable[27 - y].F : Math.Round((double)(lambdaAverageTable[27 - y].F * baseTuneTable[27 - y].F), 3);
+                suggestedTuneTable[27 - y].G = !lambdaAverageTable[27 - y].G.HasValue ? baseTuneTable[27 - y].G : Math.Round((double)(lambdaAverageTable[27 - y].G * baseTuneTable[27 - y].G), 3);
+                suggestedTuneTable[27 - y].H = !lambdaAverageTable[27 - y].H.HasValue ? baseTuneTable[27 - y].H : Math.Round((double)(lambdaAverageTable[27 - y].H * baseTuneTable[27 - y].H), 3);
+                suggestedTuneTable[27 - y].I = !lambdaAverageTable[27 - y].I.HasValue ? baseTuneTable[27 - y].I : Math.Round((double)(lambdaAverageTable[27 - y].I * baseTuneTable[27 - y].I), 3);
+                suggestedTuneTable[27 - y].J = !lambdaAverageTable[27 - y].J.HasValue ? baseTuneTable[27 - y].J : Math.Round((double)(lambdaAverageTable[27 - y].J * baseTuneTable[27 - y].J), 3);
+                suggestedTuneTable[27 - y].K = !lambdaAverageTable[27 - y].K.HasValue ? baseTuneTable[27 - y].K : Math.Round((double)(lambdaAverageTable[27 - y].K * baseTuneTable[27 - y].K), 3);
+                suggestedTuneTable[27 - y].L = !lambdaAverageTable[27 - y].L.HasValue ? baseTuneTable[27 - y].L : Math.Round((double)(lambdaAverageTable[27 - y].L * baseTuneTable[27 - y].L), 3);
+                suggestedTuneTable[27 - y].M = !lambdaAverageTable[27 - y].M.HasValue ? baseTuneTable[27 - y].M : Math.Round((double)(lambdaAverageTable[27 - y].M * baseTuneTable[27 - y].M), 3);
+                suggestedTuneTable[27 - y].N = !lambdaAverageTable[27 - y].N.HasValue ? baseTuneTable[27 - y].N : Math.Round((double)(lambdaAverageTable[27 - y].N * baseTuneTable[27 - y].N), 3);
+                suggestedTuneTable[27 - y].O = !lambdaAverageTable[27 - y].O.HasValue ? baseTuneTable[27 - y].O : Math.Round((double)(lambdaAverageTable[27 - y].O * baseTuneTable[27 - y].O), 3);
+                suggestedTuneTable[27 - y].P = !lambdaAverageTable[27 - y].P.HasValue ? baseTuneTable[27 - y].P : Math.Round((double)(lambdaAverageTable[27 - y].P * baseTuneTable[27 - y].P), 3);
+                suggestedTuneTable[27 - y].Q = !lambdaAverageTable[27 - y].Q.HasValue ? baseTuneTable[27 - y].Q : Math.Round((double)(lambdaAverageTable[27 - y].Q * baseTuneTable[27 - y].Q), 3);
+                suggestedTuneTable[27 - y].R = !lambdaAverageTable[27 - y].R.HasValue ? baseTuneTable[27 - y].R : Math.Round((double)(lambdaAverageTable[27 - y].R * baseTuneTable[27 - y].R), 3);
+                suggestedTuneTable[27 - y].S = !lambdaAverageTable[27 - y].S.HasValue ? baseTuneTable[27 - y].S : Math.Round((double)(lambdaAverageTable[27 - y].S * baseTuneTable[27 - y].S), 3);
+                suggestedTuneTable[27 - y].T = !lambdaAverageTable[27 - y].T.HasValue ? baseTuneTable[27 - y].T : Math.Round((double)(lambdaAverageTable[27 - y].T * baseTuneTable[27 - y].T), 3);
+                suggestedTuneTable[27 - y].U = !lambdaAverageTable[27 - y].U.HasValue ? baseTuneTable[27 - y].U : Math.Round((double)(lambdaAverageTable[27 - y].U * baseTuneTable[27 - y].U), 3);
+                suggestedTuneTable[27 - y].V = !lambdaAverageTable[27 - y].V.HasValue ? baseTuneTable[27 - y].V : Math.Round((double)(lambdaAverageTable[27 - y].V * baseTuneTable[27 - y].V), 3);
+                suggestedTuneTable[27 - y].W = !lambdaAverageTable[27 - y].W.HasValue ? baseTuneTable[27 - y].W : Math.Round((double)(lambdaAverageTable[27 - y].W * baseTuneTable[27 - y].W), 3);
+                suggestedTuneTable[27 - y].X = !lambdaAverageTable[27 - y].X.HasValue ? baseTuneTable[27 - y].X : Math.Round((double)(lambdaAverageTable[27 - y].X * baseTuneTable[27 - y].X), 3);
+                suggestedTuneTable[27 - y].Y = !lambdaAverageTable[27 - y].Y.HasValue ? baseTuneTable[27 - y].Y : Math.Round((double)(lambdaAverageTable[27 - y].Y * baseTuneTable[27 - y].Y), 3);
+                suggestedTuneTable[27 - y].Z = !lambdaAverageTable[27 - y].Z.HasValue ? baseTuneTable[27 - y].Z : Math.Round((double)(lambdaAverageTable[27 - y].Z * baseTuneTable[27 - y].Z), 3);
+            }
+        }
 
         #endregion
     }

@@ -15,20 +15,9 @@
                             <Image Source="C:\Users\Scott\Documents\supermileage\Scott'sMapTool\resources\Custom-Icon-Design-Flatastic-8-Refresh.ico"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="Open">
+                    <MenuItem Header="Open" x:Name="Open" Click="Open_Click">
                         <MenuItem.Icon>
                             <Image Source="C:\Users\Scott\Documents\supermileage\Scott'sMapTool\resources\Avosoft-Warm-Toolbar-Folder-open.ico"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <Separator />
-                    <MenuItem Header="Add...">
-                        <MenuItem.Icon>
-                            <Image Source="C:\Users\Scott\Documents\supermileage\Scott'sMapTool\resources\Custom-Icon-Design-Flatastic-1-Add-1.ico"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="Remove...">
-                        <MenuItem.Icon>
-                            <Image Source="C:\Users\Scott\Documents\supermileage\Scott'sMapTool\resources\Awicons-Vista-Artistic-Delete.ico"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
@@ -78,7 +67,9 @@
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="7*"/>
                         <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="7*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
@@ -86,9 +77,25 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Label Content="Base Tune" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Column="0" Grid.Row="0" FontWeight="Bold"/>
-                    <Label Content="Lambda Recordings In Use" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Column="1" Grid.Row="0" FontWeight="Bold"/>
+                    <Label Content="Lambda Recordings In Use" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Column="2" Grid.Row="0" FontWeight="Bold"/>
                     <ListBox x:Name="TuneListBox" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="5,5,5,5" Height="60" DragEnter="TuneListBox_DragEnter" Drop="TuneListBox_Drop" />
-                    <ListBox x:Name="LambdaListBox" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="5,5,5,5" Height="60" DragEnter="LambdaListBox_DragEnter" Drop="LambdaListBox_Drop" />
+                    <ListBox x:Name="LambdaListBox" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="5,5,5,5" Height="60" DragEnter="LambdaListBox_DragEnter" Drop="LambdaListBox_Drop" SelectionMode="Extended"/>
+                    <Grid Grid.Column="1" Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Button x:Name="BaseTuneAdd" Click="BaseTuneAdd_Click" Content="Add..." Margin="5" Grid.Row="0"/>
+                        <Button x:Name="BaseTuneRemove" Click="BaseTuneRemove_Click" Content="Remove..." Margin="5" Grid.Row="1"/>
+                    </Grid>
+                    <Grid Grid.Column="3" Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Button x:Name="LambdaAdd" Click="LambdaAdd_Click" Content="Add..." Margin="5" Grid.Row="0"/>
+                        <Button x:Name="LambdRemove" Click="LambdRemove_Click" Content="Remove..." Margin="5" Grid.Row="1"/>
+                    </Grid>
                 </Grid>
                 <DataGrid Grid.Row="1" AutoGenerateColumns="False" HorizontalAlignment="Stretch" Name="dataGrid1" VerticalAlignment="Stretch" HeadersVisibility="None" IsReadOnly="True">
                     <DataGrid.Columns>
