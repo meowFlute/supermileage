@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Windows.Controls;
 
 namespace Scott_sMapTool
 {
@@ -34,45 +35,6 @@ namespace Scott_sMapTool
         //this is the scaling factor for the averaged lambda data that we'll use to tune the engine
         public double fuelScalingFactor = 1.0;
 
-        #endregion
-
-        #region Custom Classes
-
-        public class GridRowObject:ICloneable
-        {
-            public double? A { get; set; }
-            public double? B { get; set; }
-            public double? C { get; set; }
-            public double? D { get; set; }
-            public double? E { get; set; }
-            public double? F { get; set; }
-            public double? G { get; set; }
-            public double? H { get; set; }
-            public double? I { get; set; }
-            public double? J { get; set; }
-            public double? K { get; set; }
-            public double? L { get; set; }
-            public double? M { get; set; }
-            public double? N { get; set; }
-            public double? O { get; set; }
-            public double? P { get; set; }
-            public double? Q { get; set; }
-            public double? R { get; set; }
-            public double? S { get; set; }
-            public double? T { get; set; }
-            public double? U { get; set; }
-            public double? V { get; set; }
-            public double? W { get; set; }
-            public double? X { get; set; }
-            public double? Y { get; set; }
-            public double? Z { get; set; }
-
-            public object Clone()
-            {
-                GridRowObject newRow = (GridRowObject)MemberwiseClone();
-                return newRow;
-            }
-        }
         #endregion
 
         #region public MainWindow()
@@ -1052,5 +1014,55 @@ namespace Scott_sMapTool
         }
 
         #endregion
+    }
+
+    public class GridRowObject : ICloneable
+    {
+        public double? A { get; set; }
+        public double? B { get; set; }
+        public double? C { get; set; }
+        public double? D { get; set; }
+        public double? E { get; set; }
+        public double? F { get; set; }
+        public double? G { get; set; }
+        public double? H { get; set; }
+        public double? I { get; set; }
+        public double? J { get; set; }
+        public double? K { get; set; }
+        public double? L { get; set; }
+        public double? M { get; set; }
+        public double? N { get; set; }
+        public double? O { get; set; }
+        public double? P { get; set; }
+        public double? Q { get; set; }
+        public double? R { get; set; }
+        public double? S { get; set; }
+        public double? T { get; set; }
+        public double? U { get; set; }
+        public double? V { get; set; }
+        public double? W { get; set; }
+        public double? X { get; set; }
+        public double? Y { get; set; }
+        public double? Z { get; set; }
+
+        public object Clone()
+        {
+            GridRowObject newRow = (GridRowObject)MemberwiseClone();
+            return newRow;
+        }
+    }
+
+    public class myCellTemplateSelector : DataTemplateSelector
+    {
+        public DataTemplate NormalCell  { get; set; }
+        public DataTemplate HeaderCell  { get; set; }
+        public DataTemplate ChangedCell { get; set; }
+
+        public override DataTemplate SelectTemplate(object item, DependencyObject container)
+        {
+
+
+            return base.SelectTemplate(item, container);
+        }
     }
 }
