@@ -99,32 +99,188 @@
                 </Grid>
                 <DataGrid Grid.Row="1" AutoGenerateColumns="False" HorizontalAlignment="Stretch" Name="dataGrid1" VerticalAlignment="Stretch" HeadersVisibility="None" IsReadOnly="True">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding Path=A}" Width="*" MinWidth="40"/>
-                        <DataGridTextColumn Binding="{Binding Path=B}" Width="*" MinWidth="40"/>
-                        <DataGridTextColumn Binding="{Binding Path=C}" Width="*" MinWidth="40"/>
-                        <DataGridTextColumn Binding="{Binding Path=D}" Width="*" MinWidth="40"/>
-                        <DataGridTextColumn Binding="{Binding Path=E}" Width="*" MinWidth="40"/>
-                        <DataGridTextColumn Binding="{Binding Path=F}" Width="*" MinWidth="40"/>
-                        <DataGridTextColumn Binding="{Binding Path=G}" Width="*" MinWidth="40"/>
-                        <DataGridTextColumn Binding="{Binding Path=H}" Width="*" MinWidth="40"/>
-                        <DataGridTextColumn Binding="{Binding Path=I}" Width="*" MinWidth="40"/>
-                        <DataGridTextColumn Binding="{Binding Path=J}" Width="*" MinWidth="40"/>
-                        <DataGridTextColumn Binding="{Binding Path=K}" Width="*" MinWidth="40"/>
-                        <DataGridTextColumn Binding="{Binding Path=L}" Width="*" MinWidth="40"/>
-                        <DataGridTextColumn Binding="{Binding Path=M}" Width="*" MinWidth="40"/>
-                        <DataGridTextColumn Binding="{Binding Path=N}" Width="*" MinWidth="40"/>
-                        <DataGridTextColumn Binding="{Binding Path=O}" Width="*" MinWidth="40"/>
-                        <DataGridTextColumn Binding="{Binding Path=P}" Width="*" MinWidth="40"/>
-                        <DataGridTextColumn Binding="{Binding Path=Q}" Width="*" MinWidth="40"/>
-                        <DataGridTextColumn Binding="{Binding Path=R}" Width="*" MinWidth="40"/>
-                        <DataGridTextColumn Binding="{Binding Path=S}" Width="*" MinWidth="40"/>
-                        <DataGridTextColumn Binding="{Binding Path=T}" Width="*" MinWidth="40"/>
-                        <DataGridTextColumn Binding="{Binding Path=U}" Width="*" MinWidth="40"/>
-                        <DataGridTextColumn Binding="{Binding Path=V}" Width="*" MinWidth="40"/>
-                        <DataGridTextColumn Binding="{Binding Path=W}" Width="*" MinWidth="40"/>
-                        <DataGridTextColumn Binding="{Binding Path=X}" Width="*" MinWidth="40"/>
-                        <DataGridTextColumn Binding="{Binding Path=Y}" Width="*" MinWidth="40"/>
-                        <DataGridTextColumn Binding="{Binding Path=Z}" Width="*" MinWidth="40"/>
+                        <DataGridTextColumn Binding="{Binding Path=A}" Width="*" MinWidth="40">
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Foreground" Value="{Binding Path=AColor, NotifyOnSourceUpdated=True}"/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding Path=B}" Width="*" MinWidth="40">
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Foreground" Value="{Binding Path=BColor, NotifyOnSourceUpdated=True}"/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding Path=C}" Width="*" MinWidth="40">
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Foreground" Value="{Binding Path=CColor, NotifyOnSourceUpdated=True}"/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding Path=D}" Width="*" MinWidth="40">
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Foreground" Value="{Binding Path=DColor, NotifyOnSourceUpdated=True}"/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding Path=E}" Width="*" MinWidth="40">
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Foreground" Value="{Binding Path=EColor, NotifyOnSourceUpdated=True}"/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding Path=F}" Width="*" MinWidth="40">
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Foreground" Value="{Binding Path=FColor, NotifyOnSourceUpdated=True}"/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding Path=G}" Width="*" MinWidth="40">
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Foreground" Value="{Binding Path=GColor, NotifyOnSourceUpdated=True}"/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding Path=H}" Width="*" MinWidth="40">
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Foreground" Value="{Binding Path=HColor, NotifyOnSourceUpdated=True}"/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding Path=I}" Width="*" MinWidth="40">
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Foreground" Value="{Binding Path=IColor, NotifyOnSourceUpdated=True}"/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding Path=J}" Width="*" MinWidth="40">
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Foreground" Value="{Binding Path=JColor, NotifyOnSourceUpdated=True}"/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding Path=K}" Width="*" MinWidth="40">
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Foreground" Value="{Binding Path=KColor, NotifyOnSourceUpdated=True}"/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding Path=L}" Width="*" MinWidth="40">
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Foreground" Value="{Binding Path=LColor, NotifyOnSourceUpdated=True}"/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding Path=M}" Width="*" MinWidth="40">
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Foreground" Value="{Binding Path=MColor, NotifyOnSourceUpdated=True}"/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding Path=N}" Width="*" MinWidth="40">
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Foreground" Value="{Binding Path=NColor, NotifyOnSourceUpdated=True}"/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding Path=O}" Width="*" MinWidth="40">
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Foreground" Value="{Binding Path=OColor, NotifyOnSourceUpdated=True}"/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding Path=P}" Width="*" MinWidth="40">
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Foreground" Value="{Binding Path=PColor, NotifyOnSourceUpdated=True}"/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding Path=Q}" Width="*" MinWidth="40">
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Foreground" Value="{Binding Path=QColor, NotifyOnSourceUpdated=True}"/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding Path=R}" Width="*" MinWidth="40">
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Foreground" Value="{Binding Path=RColor, NotifyOnSourceUpdated=True}"/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding Path=S}" Width="*" MinWidth="40">
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Foreground" Value="{Binding Path=SColor, NotifyOnSourceUpdated=True}"/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding Path=T}" Width="*" MinWidth="40">
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Foreground" Value="{Binding Path=TColor, NotifyOnSourceUpdated=True}"/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding Path=U}" Width="*" MinWidth="40">
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Foreground" Value="{Binding Path=UColor, NotifyOnSourceUpdated=True}"/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding Path=V}" Width="*" MinWidth="40">
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Foreground" Value="{Binding Path=VColor, NotifyOnSourceUpdated=True}"/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding Path=W}" Width="*" MinWidth="40">
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Foreground" Value="{Binding Path=WColor, NotifyOnSourceUpdated=True}"/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding Path=X}" Width="*" MinWidth="40">
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Foreground" Value="{Binding Path=XColor, NotifyOnSourceUpdated=True}"/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding Path=Y}" Width="*" MinWidth="40">
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Foreground" Value="{Binding Path=YColor, NotifyOnSourceUpdated=True}"/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding Path=Z}" Width="*" MinWidth="40">
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Foreground" Value="{Binding Path=ZColor, NotifyOnSourceUpdated=True}"/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>

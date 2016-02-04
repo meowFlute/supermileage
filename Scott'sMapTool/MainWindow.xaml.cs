@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Windows.Media;
 
 namespace Scott_sMapTool
 {
@@ -40,32 +41,83 @@ namespace Scott_sMapTool
 
         public class GridRowObject:ICloneable
         {
-            public double? A { get; set; }
-            public double? B { get; set; }
-            public double? C { get; set; }
-            public double? D { get; set; }
-            public double? E { get; set; }
-            public double? F { get; set; }
-            public double? G { get; set; }
-            public double? H { get; set; }
-            public double? I { get; set; }
-            public double? J { get; set; }
-            public double? K { get; set; }
-            public double? L { get; set; }
-            public double? M { get; set; }
-            public double? N { get; set; }
-            public double? O { get; set; }
-            public double? P { get; set; }
-            public double? Q { get; set; }
-            public double? R { get; set; }
-            public double? S { get; set; }
-            public double? T { get; set; }
-            public double? U { get; set; }
-            public double? V { get; set; }
-            public double? W { get; set; }
-            public double? X { get; set; }
-            public double? Y { get; set; }
-            public double? Z { get; set; }
+            public double? A { get; set; } = null;
+            public SolidColorBrush AColor { get; set; } = new SolidColorBrush(Colors.Black);
+
+            public double? B { get; set; } = null;
+            public SolidColorBrush BColor { get; set; } = new SolidColorBrush(Colors.Black);
+
+            public double? C { get; set; } = null;
+            public SolidColorBrush CColor { get; set; } = new SolidColorBrush(Colors.Black);
+
+            public double? D { get; set; } = null;
+            public SolidColorBrush DColor { get; set; } = new SolidColorBrush(Colors.Black);
+
+            public double? E { get; set; } = null;
+            public SolidColorBrush EColor { get; set; } = new SolidColorBrush(Colors.Black);
+
+            public double? F { get; set; } = null;
+            public SolidColorBrush FColor { get; set; } = new SolidColorBrush(Colors.Black);
+
+            public double? G { get; set; } = null;
+            public SolidColorBrush GColor { get; set; } = new SolidColorBrush(Colors.Black);
+
+            public double? H { get; set; } = null;
+            public SolidColorBrush HColor { get; set; } = new SolidColorBrush(Colors.Black);
+
+            public double? I { get; set; } = null;
+            public SolidColorBrush IColor { get; set; } = new SolidColorBrush(Colors.Black);
+
+            public double? J { get; set; } = null;
+            public SolidColorBrush JColor { get; set; } = new SolidColorBrush(Colors.Black);
+
+            public double? K { get; set; } = null;
+            public SolidColorBrush KColor { get; set; } = new SolidColorBrush(Colors.Black);
+
+            public double? L { get; set; } = null;
+            public SolidColorBrush LColor { get; set; } = new SolidColorBrush(Colors.Black);
+
+            public double? M { get; set; } = null;
+            public SolidColorBrush MColor { get; set; } = new SolidColorBrush(Colors.Black);
+
+            public double? N { get; set; } = null;
+            public SolidColorBrush NColor { get; set; } = new SolidColorBrush(Colors.Black);
+
+            public double? O { get; set; } = null;
+            public SolidColorBrush OColor { get; set; } = new SolidColorBrush(Colors.Black);
+
+            public double? P { get; set; } = null;
+            public SolidColorBrush PColor { get; set; } = new SolidColorBrush(Colors.Black);
+
+            public double? Q { get; set; } = null;
+            public SolidColorBrush QColor { get; set; } = new SolidColorBrush(Colors.Black);
+
+            public double? R { get; set; } = null;
+            public SolidColorBrush RColor { get; set; } = new SolidColorBrush(Colors.Black);
+
+            public double? S { get; set; } = null;
+            public SolidColorBrush SColor { get; set; } = new SolidColorBrush(Colors.Black);
+
+            public double? T { get; set; } = null;
+            public SolidColorBrush TColor { get; set; } = new SolidColorBrush(Colors.Black);
+
+            public double? U { get; set; } = null;
+            public SolidColorBrush UColor { get; set; } = new SolidColorBrush(Colors.Black);
+
+            public double? V { get; set; } = null;
+            public SolidColorBrush VColor { get; set; } = new SolidColorBrush(Colors.Black);
+
+            public double? W { get; set; } = null;
+            public SolidColorBrush WColor { get; set; } = new SolidColorBrush(Colors.Black);
+
+            public double? X { get; set; } = null;
+            public SolidColorBrush XColor { get; set; } = new SolidColorBrush(Colors.Black);
+
+            public double? Y { get; set; } = null;
+            public SolidColorBrush YColor { get; set; } = new SolidColorBrush(Colors.Black);
+
+            public double? Z { get; set; } = null;
+            public SolidColorBrush ZColor { get; set; } = new SolidColorBrush(Colors.Black);
 
             public object Clone()
             {
@@ -1048,6 +1100,33 @@ namespace Scott_sMapTool
                 suggestedTuneTable[27 - y].X = !lambdaAverageTable[27 - y].X.HasValue ? baseTuneTable[27 - y].X : Math.Round((double)(lambdaAverageTable[27 - y].X * baseTuneTable[27 - y].X), 3);
                 suggestedTuneTable[27 - y].Y = !lambdaAverageTable[27 - y].Y.HasValue ? baseTuneTable[27 - y].Y : Math.Round((double)(lambdaAverageTable[27 - y].Y * baseTuneTable[27 - y].Y), 3);
                 suggestedTuneTable[27 - y].Z = !lambdaAverageTable[27 - y].Z.HasValue ? baseTuneTable[27 - y].Z : Math.Round((double)(lambdaAverageTable[27 - y].Z * baseTuneTable[27 - y].Z), 3);
+
+                suggestedTuneTable[27 - y].BColor = lambdaAverageTable[27 - y].B.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                suggestedTuneTable[27 - y].CColor = lambdaAverageTable[27 - y].C.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                suggestedTuneTable[27 - y].DColor = lambdaAverageTable[27 - y].D.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                suggestedTuneTable[27 - y].EColor = lambdaAverageTable[27 - y].E.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                suggestedTuneTable[27 - y].FColor = lambdaAverageTable[27 - y].F.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                suggestedTuneTable[27 - y].GColor = lambdaAverageTable[27 - y].G.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                suggestedTuneTable[27 - y].HColor = lambdaAverageTable[27 - y].H.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                suggestedTuneTable[27 - y].IColor = lambdaAverageTable[27 - y].I.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                suggestedTuneTable[27 - y].JColor = lambdaAverageTable[27 - y].J.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                suggestedTuneTable[27 - y].KColor = lambdaAverageTable[27 - y].K.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                suggestedTuneTable[27 - y].LColor = lambdaAverageTable[27 - y].L.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                suggestedTuneTable[27 - y].MColor = lambdaAverageTable[27 - y].M.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                suggestedTuneTable[27 - y].NColor = lambdaAverageTable[27 - y].N.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                suggestedTuneTable[27 - y].OColor = lambdaAverageTable[27 - y].O.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                suggestedTuneTable[27 - y].PColor = lambdaAverageTable[27 - y].P.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                suggestedTuneTable[27 - y].QColor = lambdaAverageTable[27 - y].Q.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                suggestedTuneTable[27 - y].RColor = lambdaAverageTable[27 - y].R.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                suggestedTuneTable[27 - y].SColor = lambdaAverageTable[27 - y].S.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                suggestedTuneTable[27 - y].TColor = lambdaAverageTable[27 - y].T.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                suggestedTuneTable[27 - y].UColor = lambdaAverageTable[27 - y].U.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                suggestedTuneTable[27 - y].VColor = lambdaAverageTable[27 - y].V.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                suggestedTuneTable[27 - y].WColor = lambdaAverageTable[27 - y].W.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                suggestedTuneTable[27 - y].XColor = lambdaAverageTable[27 - y].X.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                suggestedTuneTable[27 - y].YColor = lambdaAverageTable[27 - y].Y.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                suggestedTuneTable[27 - y].ZColor = lambdaAverageTable[27 - y].Z.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+
             }
         }
 
