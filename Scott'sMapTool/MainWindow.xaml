@@ -21,13 +21,6 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
-                    <MenuItem Header="Save">
-                        <MenuItem.Icon>
-                            <Image Source="C:\Users\Scott\Documents\supermileage\Scott'sMapTool\resources\Oxygen-Icons.org-Oxygen-Actions-document-save.ico"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="Save As..."/>
-                    <Separator/>
                     <MenuItem Header="Exit" Click="Close_Click">
                         <MenuItem.Icon>
                             <Image Source="C:\Users\Scott\Documents\supermileage\Scott'sMapTool\resources\application_exit.ico"/>
@@ -42,14 +35,6 @@
                     </MenuItem>
                     <MenuItem Header="Suggested MAP" Click="Show_SuggestedMap_Click"/>
                     <MenuItem Header="Recorded Lambda Averages" Click="Show_LambdaAverages_Click" />
-                </MenuItem>
-                <MenuItem Header="Edit">
-                    <MenuItem Header="Lambda Files List">
-                        <MenuItem.Icon>
-                            <Image Source="C:\Users\Scott\Documents\supermileage\Scott'sMapTool\resources\Icons8-Windows-8-Data-List.ico"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="Base Tune File (.ped)"/>
                 </MenuItem>
                 <MenuItem Header="Help">
                     <MenuItem Header="View Help">
@@ -97,7 +82,7 @@
                         <Button x:Name="LambdRemove" Click="LambdRemove_Click" Content="Remove..." Margin="5" Grid.Row="1"/>
                     </Grid>
                 </Grid>
-                <DataGrid Grid.Row="1" AutoGenerateColumns="False" HorizontalAlignment="Stretch" Name="dataGrid1" VerticalAlignment="Stretch" HeadersVisibility="None" IsReadOnly="True">
+                <DataGrid AlternatingRowBackground="LightBlue" AlternationCount="2" Grid.Row="1" AutoGenerateColumns="False" HorizontalAlignment="Stretch" Name="dataGrid1" VerticalAlignment="Stretch" HeadersVisibility="None" IsReadOnly="True">
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Path=A}" Width="*" MinWidth="40">
                             <DataGridTextColumn.CellStyle>
