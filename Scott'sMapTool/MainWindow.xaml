@@ -5,44 +5,37 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Scott_sMapTool"
         mc:Ignorable="d"
-        Title="Scott's MAP Tools" Height="500" Width="1050">
+        Title="Scott's MAP Tools" Height="675" Width="1500"
+        Icon="resources\Icons8-Windows-8-Transport-Engine.ico">
     <Grid>
         <DockPanel>
             <Menu DockPanel.Dock="Top" BorderBrush="LightGray" BorderThickness="1px">
                 <MenuItem Header="File">
                     <MenuItem Header="New" Click="New_Click">
                         <MenuItem.Icon>
-                            <Image Source="C:\Users\Scott\Documents\supermileage\Scott'sMapTool\resources\Custom-Icon-Design-Flatastic-8-Refresh.ico"/>
+                            <Image Source="resources\Custom-Icon-Design-Flatastic-8-Refresh.ico"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="Open" x:Name="Open" Click="Open_Click">
                         <MenuItem.Icon>
-                            <Image Source="C:\Users\Scott\Documents\supermileage\Scott'sMapTool\resources\Avosoft-Warm-Toolbar-Folder-open.ico"/>
+                            <Image Source="resources\Avosoft-Warm-Toolbar-Folder-open.ico"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
                     <MenuItem Header="Exit" Click="Close_Click">
                         <MenuItem.Icon>
-                            <Image Source="C:\Users\Scott\Documents\supermileage\Scott'sMapTool\resources\application_exit.ico"/>
+                            <Image Source="resources\application_exit.ico"/>
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Header="Show">
                     <MenuItem Header="Base MAP (from .ped)" x:Name="Show_BaseMap" Click="Show_BaseMap_Click">
                         <MenuItem.Icon>
-                            <Image Source="C:\Users\Scott\Documents\supermileage\Scott'sMapTool\resources\Treetog-Junior-Performance-tools.ico"/>
+                            <Image Source="resources\Treetog-Junior-Performance-tools.ico"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="Suggested MAP" Click="Show_SuggestedMap_Click"/>
                     <MenuItem Header="Recorded Lambda Averages" Click="Show_LambdaAverages_Click" />
-                </MenuItem>
-                <MenuItem Header="Help">
-                    <MenuItem Header="View Help">
-                        <MenuItem.Icon>
-                            <Image Source="C:\Users\Scott\Documents\supermileage\Scott'sMapTool\resources\Oxygen-Icons.org-Oxygen-Actions-help-about.ico"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="About"/>
                 </MenuItem>
             </Menu>
             <Grid>

@@ -7,11 +7,11 @@ using System.Windows;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Scott'sMapTool")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Scott'sMapTool")]
+[assembly: AssemblyTitle("ScottsMapTool")]
+[assembly: AssemblyDescription("A tool created to help BYU supermileage 2015-2016")]
+[assembly: AssemblyConfiguration("1.0.0")]
+[assembly: AssemblyCompany("meowFlute")]
+[assembly: AssemblyProduct("ScottsMapTool")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

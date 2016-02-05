@@ -4,15 +4,15 @@
 winexe
 C#
 .cs
-C:\Users\Scott\Documents\supermileage\Scott'sMapTool\obj\Debug\
+C:\Users\Scott\Documents\supermileage\Scott'sMapTool\obj\Release\
 ScottsMapTool
 none
 false
-DEBUG;TRACE
+TRACE
 C:\Users\Scott\Documents\supermileage\Scott'sMapTool\App.xaml
 11151548125
 
-933560632
+9924043147
 13738642453
 MainWindow.xaml;
 
