@@ -13,34 +13,35 @@
                 <MenuItem Header="File">
                     <MenuItem Header="New" Click="New_Click">
                         <MenuItem.Icon>
-                            <Image Source="resources\Custom-Icon-Design-Flatastic-8-Refresh.ico"/>
+                            <Image Source="resources\Custom-Icon-Design-Flatastic-8-Refresh.ico" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="Open" x:Name="Open" Click="Open_Click">
                         <MenuItem.Icon>
-                            <Image Source="resources\Avosoft-Warm-Toolbar-Folder-open.ico"/>
+                            <Image Source="resources\Avosoft-Warm-Toolbar-Folder-open.ico" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
                     <MenuItem Header="Exit" Click="Close_Click">
                         <MenuItem.Icon>
-                            <Image Source="resources\application_exit.ico"/>
+                            <Image Source="resources\application_exit.ico" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Header="Show">
                     <MenuItem Header="Base MAP (from .ped)" x:Name="Show_BaseMap" Click="Show_BaseMap_Click">
                         <MenuItem.Icon>
-                            <Image Source="resources\Treetog-Junior-Performance-tools.ico"/>
+                            <Image Source="resources\Treetog-Junior-Performance-tools.ico" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="Suggested MAP" Click="Show_SuggestedMap_Click"/>
+                    <MenuItem Header="Suggested MAP" Click="Show_SuggestedMap_Click" />
                     <MenuItem Header="Recorded Lambda Averages" Click="Show_LambdaAverages_Click" />
                 </MenuItem>
             </Menu>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="100" />
+                    <RowDefinition Height="50" />
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
@@ -75,7 +76,17 @@
                         <Button x:Name="LambdRemove" Click="LambdRemove_Click" Content="Remove..." Margin="5" Grid.Row="1"/>
                     </Grid>
                 </Grid>
-                <DataGrid AlternatingRowBackground="LightBlue" AlternationCount="2" Grid.Row="1" AutoGenerateColumns="False" HorizontalAlignment="Stretch" Name="dataGrid1" VerticalAlignment="Stretch" HeadersVisibility="None" IsReadOnly="True">
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width = "1*"/>
+                        <ColumnDefinition Width = "0.5*"/>
+                        <ColumnDefinition Width = "1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Content="Desired Lambda" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" Margin="5"/>
+                    <TextBox x:Name="desiredLambda" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" Margin="5" Text="1.05"/>
+                    <Button Content="Re-process suggested map" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="15" x:Name="Re_Process_Map" Click="Re_Process_Map_Click"/>
+                </Grid>
+                <DataGrid AlternatingRowBackground="LightBlue" AlternationCount="2" Grid.Row="2" AutoGenerateColumns="False" HorizontalAlignment="Stretch" Name="dataGrid1" VerticalAlignment="Stretch" HeadersVisibility="None" IsReadOnly="True">
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Path=A}" Width="*" MinWidth="40">
                             <DataGridTextColumn.CellStyle>

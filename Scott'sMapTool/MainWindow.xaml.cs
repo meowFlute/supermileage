@@ -544,6 +544,19 @@ namespace Scott_sMapTool
                 }
             }
         }
+
+        private void Re_Process_Map_Click(object sender, RoutedEventArgs e)
+        {
+            double testTextBox;
+            if (lambdaList.Count > 0 && baseTune.Count > 0 && double.TryParse(desiredLambda.Text, out testTextBox))
+            {
+                ProcessSuggestedMAP();
+                table = new ObservableCollection<GridRowObject>(NewCopy(suggestedTuneTable));
+                dataGrid1.ItemsSource = table;
+            }
+            else
+                MessageBox.Show("You must have a valid base tune, a list of data aquisition files, and a desired lambda");
+        }
         #endregion
 
         #region Show
@@ -1071,63 +1084,70 @@ namespace Scott_sMapTool
         {
             //start with a clean slate
             suggestedTuneTable = new ObservableCollection<GridRowObject>(NewCopy(emptyTable));
-
-            for (int y = 1; y <= 26; y++)
+            double desired_lambda;
+            if (double.TryParse(desiredLambda.Text, out desired_lambda))
             {
-                // if the value is null, return a double? with a null value, otherwise return the same value but rounded to 3 decimal places
-                suggestedTuneTable[27 - y].B = !lambdaAverageTable[27 - y].B.HasValue ? baseTuneTable[27 - y].B : Math.Round((double)(lambdaAverageTable[27 - y].B * baseTuneTable[27 - y].B), 3);
-                suggestedTuneTable[27 - y].C = !lambdaAverageTable[27 - y].C.HasValue ? baseTuneTable[27 - y].C : Math.Round((double)(lambdaAverageTable[27 - y].C * baseTuneTable[27 - y].C), 3);
-                suggestedTuneTable[27 - y].D = !lambdaAverageTable[27 - y].D.HasValue ? baseTuneTable[27 - y].D : Math.Round((double)(lambdaAverageTable[27 - y].D * baseTuneTable[27 - y].D), 3);
-                suggestedTuneTable[27 - y].E = !lambdaAverageTable[27 - y].E.HasValue ? baseTuneTable[27 - y].E : Math.Round((double)(lambdaAverageTable[27 - y].E * baseTuneTable[27 - y].E), 3);
-                suggestedTuneTable[27 - y].F = !lambdaAverageTable[27 - y].F.HasValue ? baseTuneTable[27 - y].F : Math.Round((double)(lambdaAverageTable[27 - y].F * baseTuneTable[27 - y].F), 3);
-                suggestedTuneTable[27 - y].G = !lambdaAverageTable[27 - y].G.HasValue ? baseTuneTable[27 - y].G : Math.Round((double)(lambdaAverageTable[27 - y].G * baseTuneTable[27 - y].G), 3);
-                suggestedTuneTable[27 - y].H = !lambdaAverageTable[27 - y].H.HasValue ? baseTuneTable[27 - y].H : Math.Round((double)(lambdaAverageTable[27 - y].H * baseTuneTable[27 - y].H), 3);
-                suggestedTuneTable[27 - y].I = !lambdaAverageTable[27 - y].I.HasValue ? baseTuneTable[27 - y].I : Math.Round((double)(lambdaAverageTable[27 - y].I * baseTuneTable[27 - y].I), 3);
-                suggestedTuneTable[27 - y].J = !lambdaAverageTable[27 - y].J.HasValue ? baseTuneTable[27 - y].J : Math.Round((double)(lambdaAverageTable[27 - y].J * baseTuneTable[27 - y].J), 3);
-                suggestedTuneTable[27 - y].K = !lambdaAverageTable[27 - y].K.HasValue ? baseTuneTable[27 - y].K : Math.Round((double)(lambdaAverageTable[27 - y].K * baseTuneTable[27 - y].K), 3);
-                suggestedTuneTable[27 - y].L = !lambdaAverageTable[27 - y].L.HasValue ? baseTuneTable[27 - y].L : Math.Round((double)(lambdaAverageTable[27 - y].L * baseTuneTable[27 - y].L), 3);
-                suggestedTuneTable[27 - y].M = !lambdaAverageTable[27 - y].M.HasValue ? baseTuneTable[27 - y].M : Math.Round((double)(lambdaAverageTable[27 - y].M * baseTuneTable[27 - y].M), 3);
-                suggestedTuneTable[27 - y].N = !lambdaAverageTable[27 - y].N.HasValue ? baseTuneTable[27 - y].N : Math.Round((double)(lambdaAverageTable[27 - y].N * baseTuneTable[27 - y].N), 3);
-                suggestedTuneTable[27 - y].O = !lambdaAverageTable[27 - y].O.HasValue ? baseTuneTable[27 - y].O : Math.Round((double)(lambdaAverageTable[27 - y].O * baseTuneTable[27 - y].O), 3);
-                suggestedTuneTable[27 - y].P = !lambdaAverageTable[27 - y].P.HasValue ? baseTuneTable[27 - y].P : Math.Round((double)(lambdaAverageTable[27 - y].P * baseTuneTable[27 - y].P), 3);
-                suggestedTuneTable[27 - y].Q = !lambdaAverageTable[27 - y].Q.HasValue ? baseTuneTable[27 - y].Q : Math.Round((double)(lambdaAverageTable[27 - y].Q * baseTuneTable[27 - y].Q), 3);
-                suggestedTuneTable[27 - y].R = !lambdaAverageTable[27 - y].R.HasValue ? baseTuneTable[27 - y].R : Math.Round((double)(lambdaAverageTable[27 - y].R * baseTuneTable[27 - y].R), 3);
-                suggestedTuneTable[27 - y].S = !lambdaAverageTable[27 - y].S.HasValue ? baseTuneTable[27 - y].S : Math.Round((double)(lambdaAverageTable[27 - y].S * baseTuneTable[27 - y].S), 3);
-                suggestedTuneTable[27 - y].T = !lambdaAverageTable[27 - y].T.HasValue ? baseTuneTable[27 - y].T : Math.Round((double)(lambdaAverageTable[27 - y].T * baseTuneTable[27 - y].T), 3);
-                suggestedTuneTable[27 - y].U = !lambdaAverageTable[27 - y].U.HasValue ? baseTuneTable[27 - y].U : Math.Round((double)(lambdaAverageTable[27 - y].U * baseTuneTable[27 - y].U), 3);
-                suggestedTuneTable[27 - y].V = !lambdaAverageTable[27 - y].V.HasValue ? baseTuneTable[27 - y].V : Math.Round((double)(lambdaAverageTable[27 - y].V * baseTuneTable[27 - y].V), 3);
-                suggestedTuneTable[27 - y].W = !lambdaAverageTable[27 - y].W.HasValue ? baseTuneTable[27 - y].W : Math.Round((double)(lambdaAverageTable[27 - y].W * baseTuneTable[27 - y].W), 3);
-                suggestedTuneTable[27 - y].X = !lambdaAverageTable[27 - y].X.HasValue ? baseTuneTable[27 - y].X : Math.Round((double)(lambdaAverageTable[27 - y].X * baseTuneTable[27 - y].X), 3);
-                suggestedTuneTable[27 - y].Y = !lambdaAverageTable[27 - y].Y.HasValue ? baseTuneTable[27 - y].Y : Math.Round((double)(lambdaAverageTable[27 - y].Y * baseTuneTable[27 - y].Y), 3);
-                suggestedTuneTable[27 - y].Z = !lambdaAverageTable[27 - y].Z.HasValue ? baseTuneTable[27 - y].Z : Math.Round((double)(lambdaAverageTable[27 - y].Z * baseTuneTable[27 - y].Z), 3);
+                for (int y = 1; y <= 26; y++)
+                {
+                    // if the value is null, return a double? with a null value, otherwise return the same value but rounded to 3 decimal places
+                    suggestedTuneTable[27 - y].B = !lambdaAverageTable[27 - y].B.HasValue ? baseTuneTable[27 - y].B : Math.Round((double)(lambdaAverageTable[27 - y].B * baseTuneTable[27 - y].B / desired_lambda), 2);
+                    suggestedTuneTable[27 - y].C = !lambdaAverageTable[27 - y].C.HasValue ? baseTuneTable[27 - y].C : Math.Round((double)(lambdaAverageTable[27 - y].C * baseTuneTable[27 - y].C / desired_lambda), 2);
+                    suggestedTuneTable[27 - y].D = !lambdaAverageTable[27 - y].D.HasValue ? baseTuneTable[27 - y].D : Math.Round((double)(lambdaAverageTable[27 - y].D * baseTuneTable[27 - y].D / desired_lambda), 2);
+                    suggestedTuneTable[27 - y].E = !lambdaAverageTable[27 - y].E.HasValue ? baseTuneTable[27 - y].E : Math.Round((double)(lambdaAverageTable[27 - y].E * baseTuneTable[27 - y].E / desired_lambda), 2);
+                    suggestedTuneTable[27 - y].F = !lambdaAverageTable[27 - y].F.HasValue ? baseTuneTable[27 - y].F : Math.Round((double)(lambdaAverageTable[27 - y].F * baseTuneTable[27 - y].F / desired_lambda), 2);
+                    suggestedTuneTable[27 - y].G = !lambdaAverageTable[27 - y].G.HasValue ? baseTuneTable[27 - y].G : Math.Round((double)(lambdaAverageTable[27 - y].G * baseTuneTable[27 - y].G / desired_lambda), 2);
+                    suggestedTuneTable[27 - y].H = !lambdaAverageTable[27 - y].H.HasValue ? baseTuneTable[27 - y].H : Math.Round((double)(lambdaAverageTable[27 - y].H * baseTuneTable[27 - y].H / desired_lambda), 2);
+                    suggestedTuneTable[27 - y].I = !lambdaAverageTable[27 - y].I.HasValue ? baseTuneTable[27 - y].I : Math.Round((double)(lambdaAverageTable[27 - y].I * baseTuneTable[27 - y].I / desired_lambda), 2);
+                    suggestedTuneTable[27 - y].J = !lambdaAverageTable[27 - y].J.HasValue ? baseTuneTable[27 - y].J : Math.Round((double)(lambdaAverageTable[27 - y].J * baseTuneTable[27 - y].J / desired_lambda), 2);
+                    suggestedTuneTable[27 - y].K = !lambdaAverageTable[27 - y].K.HasValue ? baseTuneTable[27 - y].K : Math.Round((double)(lambdaAverageTable[27 - y].K * baseTuneTable[27 - y].K / desired_lambda), 2);
+                    suggestedTuneTable[27 - y].L = !lambdaAverageTable[27 - y].L.HasValue ? baseTuneTable[27 - y].L : Math.Round((double)(lambdaAverageTable[27 - y].L * baseTuneTable[27 - y].L / desired_lambda), 2);
+                    suggestedTuneTable[27 - y].M = !lambdaAverageTable[27 - y].M.HasValue ? baseTuneTable[27 - y].M : Math.Round((double)(lambdaAverageTable[27 - y].M * baseTuneTable[27 - y].M / desired_lambda), 2);
+                    suggestedTuneTable[27 - y].N = !lambdaAverageTable[27 - y].N.HasValue ? baseTuneTable[27 - y].N : Math.Round((double)(lambdaAverageTable[27 - y].N * baseTuneTable[27 - y].N / desired_lambda), 2);
+                    suggestedTuneTable[27 - y].O = !lambdaAverageTable[27 - y].O.HasValue ? baseTuneTable[27 - y].O : Math.Round((double)(lambdaAverageTable[27 - y].O * baseTuneTable[27 - y].O / desired_lambda), 2);
+                    suggestedTuneTable[27 - y].P = !lambdaAverageTable[27 - y].P.HasValue ? baseTuneTable[27 - y].P : Math.Round((double)(lambdaAverageTable[27 - y].P * baseTuneTable[27 - y].P / desired_lambda), 2);
+                    suggestedTuneTable[27 - y].Q = !lambdaAverageTable[27 - y].Q.HasValue ? baseTuneTable[27 - y].Q : Math.Round((double)(lambdaAverageTable[27 - y].Q * baseTuneTable[27 - y].Q / desired_lambda), 2);
+                    suggestedTuneTable[27 - y].R = !lambdaAverageTable[27 - y].R.HasValue ? baseTuneTable[27 - y].R : Math.Round((double)(lambdaAverageTable[27 - y].R * baseTuneTable[27 - y].R / desired_lambda), 2);
+                    suggestedTuneTable[27 - y].S = !lambdaAverageTable[27 - y].S.HasValue ? baseTuneTable[27 - y].S : Math.Round((double)(lambdaAverageTable[27 - y].S * baseTuneTable[27 - y].S / desired_lambda), 2);
+                    suggestedTuneTable[27 - y].T = !lambdaAverageTable[27 - y].T.HasValue ? baseTuneTable[27 - y].T : Math.Round((double)(lambdaAverageTable[27 - y].T * baseTuneTable[27 - y].T / desired_lambda), 2);
+                    suggestedTuneTable[27 - y].U = !lambdaAverageTable[27 - y].U.HasValue ? baseTuneTable[27 - y].U : Math.Round((double)(lambdaAverageTable[27 - y].U * baseTuneTable[27 - y].U / desired_lambda), 2);
+                    suggestedTuneTable[27 - y].V = !lambdaAverageTable[27 - y].V.HasValue ? baseTuneTable[27 - y].V : Math.Round((double)(lambdaAverageTable[27 - y].V * baseTuneTable[27 - y].V / desired_lambda), 2);
+                    suggestedTuneTable[27 - y].W = !lambdaAverageTable[27 - y].W.HasValue ? baseTuneTable[27 - y].W : Math.Round((double)(lambdaAverageTable[27 - y].W * baseTuneTable[27 - y].W / desired_lambda), 2);
+                    suggestedTuneTable[27 - y].X = !lambdaAverageTable[27 - y].X.HasValue ? baseTuneTable[27 - y].X : Math.Round((double)(lambdaAverageTable[27 - y].X * baseTuneTable[27 - y].X / desired_lambda), 2);
+                    suggestedTuneTable[27 - y].Y = !lambdaAverageTable[27 - y].Y.HasValue ? baseTuneTable[27 - y].Y : Math.Round((double)(lambdaAverageTable[27 - y].Y * baseTuneTable[27 - y].Y / desired_lambda), 2);
+                    suggestedTuneTable[27 - y].Z = !lambdaAverageTable[27 - y].Z.HasValue ? baseTuneTable[27 - y].Z : Math.Round((double)(lambdaAverageTable[27 - y].Z * baseTuneTable[27 - y].Z / desired_lambda), 2);
 
-                suggestedTuneTable[27 - y].BColor = lambdaAverageTable[27 - y].B.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
-                suggestedTuneTable[27 - y].CColor = lambdaAverageTable[27 - y].C.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
-                suggestedTuneTable[27 - y].DColor = lambdaAverageTable[27 - y].D.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
-                suggestedTuneTable[27 - y].EColor = lambdaAverageTable[27 - y].E.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
-                suggestedTuneTable[27 - y].FColor = lambdaAverageTable[27 - y].F.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
-                suggestedTuneTable[27 - y].GColor = lambdaAverageTable[27 - y].G.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
-                suggestedTuneTable[27 - y].HColor = lambdaAverageTable[27 - y].H.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
-                suggestedTuneTable[27 - y].IColor = lambdaAverageTable[27 - y].I.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
-                suggestedTuneTable[27 - y].JColor = lambdaAverageTable[27 - y].J.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
-                suggestedTuneTable[27 - y].KColor = lambdaAverageTable[27 - y].K.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
-                suggestedTuneTable[27 - y].LColor = lambdaAverageTable[27 - y].L.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
-                suggestedTuneTable[27 - y].MColor = lambdaAverageTable[27 - y].M.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
-                suggestedTuneTable[27 - y].NColor = lambdaAverageTable[27 - y].N.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
-                suggestedTuneTable[27 - y].OColor = lambdaAverageTable[27 - y].O.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
-                suggestedTuneTable[27 - y].PColor = lambdaAverageTable[27 - y].P.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
-                suggestedTuneTable[27 - y].QColor = lambdaAverageTable[27 - y].Q.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
-                suggestedTuneTable[27 - y].RColor = lambdaAverageTable[27 - y].R.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
-                suggestedTuneTable[27 - y].SColor = lambdaAverageTable[27 - y].S.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
-                suggestedTuneTable[27 - y].TColor = lambdaAverageTable[27 - y].T.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
-                suggestedTuneTable[27 - y].UColor = lambdaAverageTable[27 - y].U.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
-                suggestedTuneTable[27 - y].VColor = lambdaAverageTable[27 - y].V.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
-                suggestedTuneTable[27 - y].WColor = lambdaAverageTable[27 - y].W.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
-                suggestedTuneTable[27 - y].XColor = lambdaAverageTable[27 - y].X.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
-                suggestedTuneTable[27 - y].YColor = lambdaAverageTable[27 - y].Y.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
-                suggestedTuneTable[27 - y].ZColor = lambdaAverageTable[27 - y].Z.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
-
+                    suggestedTuneTable[27 - y].BColor = lambdaAverageTable[27 - y].B.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                    suggestedTuneTable[27 - y].CColor = lambdaAverageTable[27 - y].C.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                    suggestedTuneTable[27 - y].DColor = lambdaAverageTable[27 - y].D.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                    suggestedTuneTable[27 - y].EColor = lambdaAverageTable[27 - y].E.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                    suggestedTuneTable[27 - y].FColor = lambdaAverageTable[27 - y].F.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                    suggestedTuneTable[27 - y].GColor = lambdaAverageTable[27 - y].G.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                    suggestedTuneTable[27 - y].HColor = lambdaAverageTable[27 - y].H.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                    suggestedTuneTable[27 - y].IColor = lambdaAverageTable[27 - y].I.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                    suggestedTuneTable[27 - y].JColor = lambdaAverageTable[27 - y].J.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                    suggestedTuneTable[27 - y].KColor = lambdaAverageTable[27 - y].K.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                    suggestedTuneTable[27 - y].LColor = lambdaAverageTable[27 - y].L.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                    suggestedTuneTable[27 - y].MColor = lambdaAverageTable[27 - y].M.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                    suggestedTuneTable[27 - y].NColor = lambdaAverageTable[27 - y].N.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                    suggestedTuneTable[27 - y].OColor = lambdaAverageTable[27 - y].O.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                    suggestedTuneTable[27 - y].PColor = lambdaAverageTable[27 - y].P.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                    suggestedTuneTable[27 - y].QColor = lambdaAverageTable[27 - y].Q.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                    suggestedTuneTable[27 - y].RColor = lambdaAverageTable[27 - y].R.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                    suggestedTuneTable[27 - y].SColor = lambdaAverageTable[27 - y].S.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                    suggestedTuneTable[27 - y].TColor = lambdaAverageTable[27 - y].T.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                    suggestedTuneTable[27 - y].UColor = lambdaAverageTable[27 - y].U.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                    suggestedTuneTable[27 - y].VColor = lambdaAverageTable[27 - y].V.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                    suggestedTuneTable[27 - y].WColor = lambdaAverageTable[27 - y].W.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                    suggestedTuneTable[27 - y].XColor = lambdaAverageTable[27 - y].X.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                    suggestedTuneTable[27 - y].YColor = lambdaAverageTable[27 - y].Y.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                    suggestedTuneTable[27 - y].ZColor = lambdaAverageTable[27 - y].Z.HasValue ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+                }
             }
+            else
+            {
+                MessageBox.Show("The deisred lambda box MUST have a number inside of it");
+            }
+            
         }
 
         #endregion
