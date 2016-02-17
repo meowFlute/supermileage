@@ -832,8 +832,8 @@ namespace Scott_sMapTool
             List<string> columnHeaders = line.Split(',').ToList();  // a collection of all the headers
             int RPMcolumnIndex = columnHeaders.IndexOf("RPM");      // RPM 0-based column index in the .csv file
             int TPScolumnIndex = columnHeaders.IndexOf("TPS (%)");  // TPS 0-based column index in the .csv file
-            int MAPcolumnIndex = columnHeaders.IndexOf("MAP (psi)");  // TPS 0-based column index in the .csv file
             int LambdaMeasuredcolumnIndex = columnHeaders.IndexOf("Lambda Measured");  // TPS 0-based column index in the .csv file
+
             //create lists for each variable
             List<double> rpm = new List<double>();
             List<double> tps = new List<double>();
@@ -848,7 +848,6 @@ namespace Scott_sMapTool
                 string[] values = line.Split(',');
                 rpm.Add(Convert.ToDouble(values[RPMcolumnIndex]));
                 tps.Add(Convert.ToDouble(values[TPScolumnIndex]));
-                map.Add(Convert.ToDouble(values[MAPcolumnIndex]));
                 lambda.Add(Convert.ToDouble(values[LambdaMeasuredcolumnIndex]));
             }
             reader.Close();
@@ -859,7 +858,6 @@ namespace Scott_sMapTool
                 //casting as an int truncates, which is what we want I'm pretty sure.
                 int rpmIndex = (int)(rpm[i] / 250);
                 int tpsIndex = 25 - (int)(tps[i] / 4);
-                int mapIndex = (int)((map[i] - 2.5) / 0.5);
 
                 cells[rpmIndex, tpsIndex, 0] += 1.0;
                 cells[rpmIndex, tpsIndex, 1] += lambda[i];
