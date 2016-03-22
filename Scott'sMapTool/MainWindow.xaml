@@ -81,10 +81,19 @@
                         <ColumnDefinition Width = "1*"/>
                         <ColumnDefinition Width = "0.5*"/>
                         <ColumnDefinition Width = "1*"/>
+                        <ColumnDefinition Width = "1*"/>
+                        <ColumnDefinition Width = "0.5*"/>
+                        <ColumnDefinition Width = "1*"/>
+                        <ColumnDefinition Width = "0.5*"/>
+                        <ColumnDefinition Width = "0.5*"/>
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0" Content="Desired Lambda" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" Margin="5"/>
                     <TextBox x:Name="desiredLambda" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" Margin="5" Text="1.05"/>
                     <Button Content="Re-process suggested map" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="15" x:Name="Re_Process_Map" Click="Re_Process_Map_Click"/>
+                    <Label Grid.Column="3" Content="Upper Acceptable Lambda" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" Margin="5"/>
+                    <TextBox x:Name="upperAcceptableLambda" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="4" Margin="5" Text="1.40"/>
+                    <Label Grid.Column="5" Content="Lower Acceptable Lambda" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" Margin="5"/>
+                    <TextBox x:Name="lowerAcceptableLambda" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="6" Margin="5" Text="0.70"/>
                 </Grid>
                 <DataGrid AlternatingRowBackground="LightBlue" AlternationCount="2" Grid.Row="2" AutoGenerateColumns="False" HorizontalAlignment="Stretch" Name="dataGrid1" VerticalAlignment="Stretch" HeadersVisibility="None" IsReadOnly="True">
                     <DataGrid.Columns>

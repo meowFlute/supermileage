@@ -592,8 +592,21 @@ namespace Scott_sMapTool
             lambdaAverageTable = new ObservableCollection<GridRowObject>(NewCopy(emptyTable));
             lambdaCountTable = new ObservableCollection<GridRowObject>(NewCopy(emptyTable));
 
+            double upperLambda = 0.0;
+            double lowerLambda = 0.0;
+            if(!double.TryParse(upperAcceptableLambda.Text, out upperLambda))
+            {
+                MessageBox.Show("We need an upper lambda limit");
+                return;
+            }
+            if (!double.TryParse(lowerAcceptableLambda.Text, out lowerLambda))
+            {
+                MessageBox.Show("We need an lower lambda limit");
+                return;
+            }
+
             //go through each of the opened lambda files
-            foreach(KeyValuePair<string, ObservableCollection<GridRowObject>> pair in openedLambdaDictionary.ToList())
+            foreach (KeyValuePair<string, ObservableCollection<GridRowObject>> pair in openedLambdaDictionary.ToList())
             {
                 //pair.Value is the observable collection of the open file
                 for(int tpsIndex = 1; tpsIndex < 27; tpsIndex++)
@@ -602,8 +615,9 @@ namespace Scott_sMapTool
 
                     // field B
                     if (pair.Value[tpsIndex].B != null && lambdaAverageTable[tpsIndex].B == null)
-                        lambdaAverageTable[tpsIndex].B = 0.0;
-                    if (pair.Value[tpsIndex].B != null)
+                        if(pair.Value[tpsIndex].B < upperLambda && pair.Value[tpsIndex].B > lowerLambda)
+                            lambdaAverageTable[tpsIndex].B = 0.0;
+                    if (pair.Value[tpsIndex].B != null && pair.Value[tpsIndex].B < upperLambda && pair.Value[tpsIndex].B > lowerLambda)
                     {
                         lambdaAverageTable[tpsIndex].B += pair.Value[tpsIndex].B;
                         if (lambdaCountTable[tpsIndex].B == null)
@@ -613,8 +627,9 @@ namespace Scott_sMapTool
 
                     // field C
                     if (pair.Value[tpsIndex].C != null && lambdaAverageTable[tpsIndex].C == null)
-                        lambdaAverageTable[tpsIndex].C = 0.0;
-                    if (pair.Value[tpsIndex].C != null)
+                        if (pair.Value[tpsIndex].C < upperLambda && pair.Value[tpsIndex].C > lowerLambda)
+                            lambdaAverageTable[tpsIndex].C = 0.0;
+                    if (pair.Value[tpsIndex].C != null && pair.Value[tpsIndex].C < upperLambda && pair.Value[tpsIndex].C > lowerLambda)
                     {
                         lambdaAverageTable[tpsIndex].C += pair.Value[tpsIndex].C;
                         if (lambdaCountTable[tpsIndex].C == null)
@@ -624,8 +639,9 @@ namespace Scott_sMapTool
 
                     // field D
                     if (pair.Value[tpsIndex].D != null && lambdaAverageTable[tpsIndex].D == null)
-                        lambdaAverageTable[tpsIndex].D = 0.0;
-                    if (pair.Value[tpsIndex].D != null)
+                        if (pair.Value[tpsIndex].D < upperLambda && pair.Value[tpsIndex].D > lowerLambda)
+                            lambdaAverageTable[tpsIndex].D = 0.0;
+                    if (pair.Value[tpsIndex].D != null && pair.Value[tpsIndex].D < upperLambda && pair.Value[tpsIndex].D > lowerLambda)
                     {
                         lambdaAverageTable[tpsIndex].D += pair.Value[tpsIndex].D;
                         if (lambdaCountTable[tpsIndex].D == null)
@@ -634,9 +650,10 @@ namespace Scott_sMapTool
                     }
 
                     // field E
-                    if (pair.Value[tpsIndex].E != null && lambdaAverageTable[tpsIndex].E == null) 
-                        lambdaAverageTable[tpsIndex].E = 0.0;
-                    if (pair.Value[tpsIndex].E != null)
+                    if (pair.Value[tpsIndex].E != null && lambdaAverageTable[tpsIndex].E == null)
+                        if (pair.Value[tpsIndex].E < upperLambda && pair.Value[tpsIndex].E > lowerLambda)
+                            lambdaAverageTable[tpsIndex].E = 0.0;
+                    if (pair.Value[tpsIndex].E != null && pair.Value[tpsIndex].E < upperLambda && pair.Value[tpsIndex].E > lowerLambda)
                     {
                         lambdaAverageTable[tpsIndex].E += pair.Value[tpsIndex].E;
                         if (lambdaCountTable[tpsIndex].E == null)
@@ -646,8 +663,9 @@ namespace Scott_sMapTool
 
                     // field F
                     if (pair.Value[tpsIndex].F != null && lambdaAverageTable[tpsIndex].F == null)
-                        lambdaAverageTable[tpsIndex].F = 0.0;
-                    if (pair.Value[tpsIndex].F != null)
+                        if (pair.Value[tpsIndex].F < upperLambda && pair.Value[tpsIndex].F > lowerLambda)
+                            lambdaAverageTable[tpsIndex].F = 0.0;
+                    if (pair.Value[tpsIndex].F != null && pair.Value[tpsIndex].F < upperLambda && pair.Value[tpsIndex].F > lowerLambda)
                     {
                         lambdaAverageTable[tpsIndex].F += pair.Value[tpsIndex].F;
                         if (lambdaCountTable[tpsIndex].F == null)
@@ -657,8 +675,9 @@ namespace Scott_sMapTool
 
                     // field G
                     if (pair.Value[tpsIndex].G != null && lambdaAverageTable[tpsIndex].G == null)
-                        lambdaAverageTable[tpsIndex].G = 0.0;
-                    if (pair.Value[tpsIndex].G != null)
+                        if (pair.Value[tpsIndex].G < upperLambda && pair.Value[tpsIndex].G > lowerLambda)
+                            lambdaAverageTable[tpsIndex].G = 0.0;
+                    if (pair.Value[tpsIndex].G != null && pair.Value[tpsIndex].G < upperLambda && pair.Value[tpsIndex].G > lowerLambda)
                     {
                         lambdaAverageTable[tpsIndex].G += pair.Value[tpsIndex].G;
                         if (lambdaCountTable[tpsIndex].G == null)
@@ -668,8 +687,9 @@ namespace Scott_sMapTool
 
                     // field H
                     if (pair.Value[tpsIndex].H != null && lambdaAverageTable[tpsIndex].H == null)
-                        lambdaAverageTable[tpsIndex].H = 0.0;
-                    if (pair.Value[tpsIndex].H != null)
+                        if (pair.Value[tpsIndex].H < upperLambda && pair.Value[tpsIndex].H > lowerLambda)
+                            lambdaAverageTable[tpsIndex].H = 0.0;
+                    if (pair.Value[tpsIndex].H != null && pair.Value[tpsIndex].H < upperLambda && pair.Value[tpsIndex].H > lowerLambda)
                     {
                         lambdaAverageTable[tpsIndex].H += pair.Value[tpsIndex].H;
                         if (lambdaCountTable[tpsIndex].H == null)
@@ -679,8 +699,9 @@ namespace Scott_sMapTool
 
                     // field I
                     if (pair.Value[tpsIndex].I != null && lambdaAverageTable[tpsIndex].I == null)
-                        lambdaAverageTable[tpsIndex].I = 0.0;
-                    if (pair.Value[tpsIndex].I != null)
+                        if (pair.Value[tpsIndex].I < upperLambda && pair.Value[tpsIndex].I > lowerLambda)
+                            lambdaAverageTable[tpsIndex].I = 0.0;
+                    if (pair.Value[tpsIndex].I != null && pair.Value[tpsIndex].I < upperLambda && pair.Value[tpsIndex].I > lowerLambda)
                     {
                         lambdaAverageTable[tpsIndex].I += pair.Value[tpsIndex].I;
                         if (lambdaCountTable[tpsIndex].I == null)
@@ -690,8 +711,9 @@ namespace Scott_sMapTool
 
                     // field J
                     if (pair.Value[tpsIndex].J != null && lambdaAverageTable[tpsIndex].J == null)
-                        lambdaAverageTable[tpsIndex].J = 0.0;
-                    if (pair.Value[tpsIndex].J != null)
+                        if (pair.Value[tpsIndex].J < upperLambda && pair.Value[tpsIndex].J > lowerLambda)
+                            lambdaAverageTable[tpsIndex].J = 0.0;
+                    if (pair.Value[tpsIndex].J != null && pair.Value[tpsIndex].J < upperLambda && pair.Value[tpsIndex].J > lowerLambda)
                     {
                         lambdaAverageTable[tpsIndex].J += pair.Value[tpsIndex].J;
                         if (lambdaCountTable[tpsIndex].J == null)
@@ -701,8 +723,9 @@ namespace Scott_sMapTool
 
                     // field K
                     if (pair.Value[tpsIndex].K != null && lambdaAverageTable[tpsIndex].K == null)
-                        lambdaAverageTable[tpsIndex].K = 0.0;
-                    if (pair.Value[tpsIndex].K != null)
+                        if (pair.Value[tpsIndex].K < upperLambda && pair.Value[tpsIndex].K > lowerLambda)
+                            lambdaAverageTable[tpsIndex].K = 0.0;
+                    if (pair.Value[tpsIndex].K != null && pair.Value[tpsIndex].K < upperLambda && pair.Value[tpsIndex].K > lowerLambda)
                     {
                         lambdaAverageTable[tpsIndex].K += pair.Value[tpsIndex].K;
                         if (lambdaCountTable[tpsIndex].K == null)
@@ -712,8 +735,9 @@ namespace Scott_sMapTool
 
                     // field L
                     if (pair.Value[tpsIndex].L != null && lambdaAverageTable[tpsIndex].L == null)
-                        lambdaAverageTable[tpsIndex].L = 0.0;
-                    if (pair.Value[tpsIndex].L != null)
+                        if (pair.Value[tpsIndex].L < upperLambda && pair.Value[tpsIndex].L > lowerLambda)
+                            lambdaAverageTable[tpsIndex].L = 0.0;
+                    if (pair.Value[tpsIndex].L != null && pair.Value[tpsIndex].L < upperLambda && pair.Value[tpsIndex].L > lowerLambda)
                     {
                         lambdaAverageTable[tpsIndex].L += pair.Value[tpsIndex].L;
                         if (lambdaCountTable[tpsIndex].L == null)
@@ -723,8 +747,9 @@ namespace Scott_sMapTool
 
                     // field M
                     if (pair.Value[tpsIndex].M != null && lambdaAverageTable[tpsIndex].M == null)
-                        lambdaAverageTable[tpsIndex].M = 0.0;
-                    if (pair.Value[tpsIndex].M != null)
+                        if (pair.Value[tpsIndex].M < upperLambda && pair.Value[tpsIndex].M > lowerLambda)
+                            lambdaAverageTable[tpsIndex].M = 0.0;
+                    if (pair.Value[tpsIndex].M != null && pair.Value[tpsIndex].M < upperLambda && pair.Value[tpsIndex].M > lowerLambda)
                     {
                         lambdaAverageTable[tpsIndex].M += pair.Value[tpsIndex].M;
                         if (lambdaCountTable[tpsIndex].M == null)
@@ -734,8 +759,9 @@ namespace Scott_sMapTool
 
                     // field N
                     if (pair.Value[tpsIndex].N != null && lambdaAverageTable[tpsIndex].N == null)
-                        lambdaAverageTable[tpsIndex].N = 0.0;
-                    if (pair.Value[tpsIndex].N != null)
+                        if (pair.Value[tpsIndex].N < upperLambda && pair.Value[tpsIndex].N > lowerLambda)
+                            lambdaAverageTable[tpsIndex].N = 0.0;
+                    if (pair.Value[tpsIndex].N != null && pair.Value[tpsIndex].N < upperLambda && pair.Value[tpsIndex].N > lowerLambda)
                     {
                         lambdaAverageTable[tpsIndex].N += pair.Value[tpsIndex].N;
                         if (lambdaCountTable[tpsIndex].N == null)
@@ -745,8 +771,9 @@ namespace Scott_sMapTool
 
                     // field O
                     if (pair.Value[tpsIndex].O != null && lambdaAverageTable[tpsIndex].O == null)
-                        lambdaAverageTable[tpsIndex].O = 0.0;
-                    if (pair.Value[tpsIndex].O != null)
+                        if (pair.Value[tpsIndex].O < upperLambda && pair.Value[tpsIndex].O > lowerLambda)
+                            lambdaAverageTable[tpsIndex].O = 0.0;
+                    if (pair.Value[tpsIndex].O != null && pair.Value[tpsIndex].O < upperLambda && pair.Value[tpsIndex].O > lowerLambda)
                     {
                         lambdaAverageTable[tpsIndex].O  += pair.Value[tpsIndex].O ;
                         if (lambdaCountTable[tpsIndex].O  == null)
@@ -756,8 +783,9 @@ namespace Scott_sMapTool
 
                     // field P
                     if (pair.Value[tpsIndex].P != null && lambdaAverageTable[tpsIndex].P == null)
-                        lambdaAverageTable[tpsIndex].P = 0.0;
-                    if (pair.Value[tpsIndex].P != null)
+                        if (pair.Value[tpsIndex].P < upperLambda && pair.Value[tpsIndex].P > lowerLambda)
+                            lambdaAverageTable[tpsIndex].P = 0.0;
+                    if (pair.Value[tpsIndex].P != null && pair.Value[tpsIndex].P < upperLambda && pair.Value[tpsIndex].P > lowerLambda)
                     {
                         lambdaAverageTable[tpsIndex].P += pair.Value[tpsIndex].P;
                         if (lambdaCountTable[tpsIndex].P == null)
@@ -767,8 +795,9 @@ namespace Scott_sMapTool
 
                     // field Q
                     if (pair.Value[tpsIndex].Q != null && lambdaAverageTable[tpsIndex].Q == null)
-                        lambdaAverageTable[tpsIndex].Q = 0.0;
-                    if (pair.Value[tpsIndex].Q != null)
+                        if (pair.Value[tpsIndex].Q < upperLambda && pair.Value[tpsIndex].Q > lowerLambda)
+                            lambdaAverageTable[tpsIndex].Q = 0.0;
+                    if (pair.Value[tpsIndex].Q != null && pair.Value[tpsIndex].Q < upperLambda && pair.Value[tpsIndex].Q > lowerLambda)
                     {
                         lambdaAverageTable[tpsIndex].Q += pair.Value[tpsIndex].Q;
                         if (lambdaCountTable[tpsIndex].Q == null)
@@ -778,8 +807,9 @@ namespace Scott_sMapTool
 
                     // field R
                     if (pair.Value[tpsIndex].R != null && lambdaAverageTable[tpsIndex].R == null)
-                        lambdaAverageTable[tpsIndex].R = 0.0;
-                    if (pair.Value[tpsIndex].R != null)
+                        if (pair.Value[tpsIndex].R < upperLambda && pair.Value[tpsIndex].R > lowerLambda)
+                            lambdaAverageTable[tpsIndex].R = 0.0;
+                    if (pair.Value[tpsIndex].R != null && pair.Value[tpsIndex].R < upperLambda && pair.Value[tpsIndex].R > lowerLambda)
                     {
                         lambdaAverageTable[tpsIndex].R += pair.Value[tpsIndex].R;
                         if (lambdaCountTable[tpsIndex].R == null)
@@ -789,19 +819,21 @@ namespace Scott_sMapTool
 
                     // field S
                     if (pair.Value[tpsIndex].S != null && lambdaAverageTable[tpsIndex].S == null)
-                        lambdaAverageTable[tpsIndex].S = 0.0;
-                    if (pair.Value[tpsIndex].S != null)
+                        if (pair.Value[tpsIndex].S < upperLambda && pair.Value[tpsIndex].S > lowerLambda)
+                            lambdaAverageTable[tpsIndex].S = 0.0;
+                    if (pair.Value[tpsIndex].S != null && pair.Value[tpsIndex].S < upperLambda && pair.Value[tpsIndex].S > lowerLambda)
                     {
-                        lambdaAverageTable[tpsIndex].R += pair.Value[tpsIndex].R;
-                        if (lambdaCountTable[tpsIndex].R == null)
-                            lambdaCountTable[tpsIndex].R = 0.0;
-                        lambdaCountTable[tpsIndex].R += 1.0;
+                        lambdaAverageTable[tpsIndex].S += pair.Value[tpsIndex].S;
+                        if (lambdaCountTable[tpsIndex].S == null)
+                            lambdaCountTable[tpsIndex].S = 0.0;
+                        lambdaCountTable[tpsIndex].S += 1.0;
                     }
 
                     // field T
                     if (pair.Value[tpsIndex].T != null && lambdaAverageTable[tpsIndex].T == null)
-                        lambdaAverageTable[tpsIndex].T = 0.0;
-                    if (pair.Value[tpsIndex].T != null)
+                        if (pair.Value[tpsIndex].T < upperLambda && pair.Value[tpsIndex].T > lowerLambda)
+                            lambdaAverageTable[tpsIndex].T = 0.0;
+                    if (pair.Value[tpsIndex].T != null && pair.Value[tpsIndex].T < upperLambda && pair.Value[tpsIndex].T > lowerLambda)
                     {
                         lambdaAverageTable[tpsIndex].T += pair.Value[tpsIndex].T;
                         if (lambdaCountTable[tpsIndex].T == null)
@@ -811,8 +843,9 @@ namespace Scott_sMapTool
 
                     // field U
                     if (pair.Value[tpsIndex].U != null && lambdaAverageTable[tpsIndex].U == null)
-                        lambdaAverageTable[tpsIndex].U = 0.0;
-                    if (pair.Value[tpsIndex].U != null)
+                        if (pair.Value[tpsIndex].U < upperLambda && pair.Value[tpsIndex].U > lowerLambda)
+                            lambdaAverageTable[tpsIndex].U = 0.0;
+                    if (pair.Value[tpsIndex].U != null && pair.Value[tpsIndex].U < upperLambda && pair.Value[tpsIndex].U > lowerLambda)
                     {
                         lambdaAverageTable[tpsIndex].U += pair.Value[tpsIndex].U;
                         if (lambdaCountTable[tpsIndex].U == null)
@@ -822,8 +855,9 @@ namespace Scott_sMapTool
 
                     // field V
                     if (pair.Value[tpsIndex].V != null && lambdaAverageTable[tpsIndex].V == null)
-                        lambdaAverageTable[tpsIndex].V = 0.0;
-                    if (pair.Value[tpsIndex].V != null)
+                        if (pair.Value[tpsIndex].V < upperLambda && pair.Value[tpsIndex].V > lowerLambda)
+                            lambdaAverageTable[tpsIndex].V = 0.0;
+                    if (pair.Value[tpsIndex].V != null && pair.Value[tpsIndex].V < upperLambda && pair.Value[tpsIndex].V > lowerLambda)
                     {
                         lambdaAverageTable[tpsIndex].V += pair.Value[tpsIndex].V;
                         if (lambdaCountTable[tpsIndex].V == null)
@@ -833,8 +867,9 @@ namespace Scott_sMapTool
 
                     // field W
                     if (pair.Value[tpsIndex].W != null && lambdaAverageTable[tpsIndex].W == null)
-                        lambdaAverageTable[tpsIndex].W = 0.0;
-                    if (pair.Value[tpsIndex].W != null)
+                        if (pair.Value[tpsIndex].W < upperLambda && pair.Value[tpsIndex].W > lowerLambda)
+                            lambdaAverageTable[tpsIndex].W = 0.0;
+                    if (pair.Value[tpsIndex].W != null && pair.Value[tpsIndex].W < upperLambda && pair.Value[tpsIndex].W > lowerLambda)
                     {
                         lambdaAverageTable[tpsIndex].W += pair.Value[tpsIndex].W;
                         if (lambdaCountTable[tpsIndex].W == null)
@@ -844,8 +879,9 @@ namespace Scott_sMapTool
 
                     // field X
                     if (pair.Value[tpsIndex].X != null && lambdaAverageTable[tpsIndex].X == null)
-                        lambdaAverageTable[tpsIndex].X = 0.0;
-                    if (pair.Value[tpsIndex].X != null)
+                        if (pair.Value[tpsIndex].X < upperLambda && pair.Value[tpsIndex].X > lowerLambda)
+                            lambdaAverageTable[tpsIndex].X = 0.0;
+                    if (pair.Value[tpsIndex].X != null && pair.Value[tpsIndex].X < upperLambda && pair.Value[tpsIndex].X > lowerLambda)
                     {
                         lambdaAverageTable[tpsIndex].X += pair.Value[tpsIndex].X;
                         if (lambdaCountTable[tpsIndex].X == null)
@@ -855,8 +891,9 @@ namespace Scott_sMapTool
 
                     // field Y
                     if (pair.Value[tpsIndex].Y != null && lambdaAverageTable[tpsIndex].Y == null)
-                        lambdaAverageTable[tpsIndex].Y = 0.0;
-                    if (pair.Value[tpsIndex].Y != null)
+                        if (pair.Value[tpsIndex].Y < upperLambda && pair.Value[tpsIndex].Y > lowerLambda)
+                            lambdaAverageTable[tpsIndex].Y = 0.0;
+                    if (pair.Value[tpsIndex].Y != null && pair.Value[tpsIndex].Y < upperLambda && pair.Value[tpsIndex].Y > lowerLambda)
                     {
                         lambdaAverageTable[tpsIndex].Y += pair.Value[tpsIndex].Y;
                         if (lambdaCountTable[tpsIndex].Y == null)
@@ -866,8 +903,9 @@ namespace Scott_sMapTool
 
                     // field Z
                     if (pair.Value[tpsIndex].Z != null && lambdaAverageTable[tpsIndex].Z == null)
-                        lambdaAverageTable[tpsIndex].Z = 0.0;
-                    if (pair.Value[tpsIndex].Z != null)
+                        if (pair.Value[tpsIndex].Z < upperLambda && pair.Value[tpsIndex].Z > lowerLambda)
+                            lambdaAverageTable[tpsIndex].Z = 0.0;
+                    if (pair.Value[tpsIndex].Z != null && pair.Value[tpsIndex].Z < upperLambda && pair.Value[tpsIndex].Z > lowerLambda)
                     {
                         lambdaAverageTable[tpsIndex].Z += pair.Value[tpsIndex].Z;
                         if (lambdaCountTable[tpsIndex].Z == null)
