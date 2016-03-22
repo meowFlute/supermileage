@@ -152,6 +152,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.5"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.5 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.5"
+                    }
+                }
             }
         }
         "Release"
@@ -176,6 +184,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.5"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.5 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.5"
+                    }
+                }
             }
         }
     }
@@ -604,18 +620,18 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:ScottsMapTool"
-        "ProductCode" = "8:{3A42B64D-A674-47C3-8424-FC9E79C31C10}"
-        "PackageCode" = "8:{4418DD9C-2BB1-4DE7-BC5E-5C7FB263ACBA}"
+        "ProductCode" = "8:{0F7D85A0-6AA5-4F6F-AB43-A445A3E80C8C}"
+        "PackageCode" = "8:{051C8F6D-974C-4C4F-95AD-E8CA8DC4079D}"
         "UpgradeCode" = "8:{49C36C88-A71C-44DC-BCC2-95F17FB29F03}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
-        "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.1.1"
+        "InstallAllUsers" = "11:TRUE"
+        "ProductVersion" = "8:1.2.0"
         "Manufacturer" = "8:meowFlute"
         "ARPHELPTELEPHONE" = "8:(509) 460-3033"
-        "ARPHELPLINK" = "8:mscottchristensen@gmail.com"
+        "ARPHELPLINK" = "8:http://www.github.com/meowflute"
         "Title" = "8:ScottsMapTool"
         "Subject" = "8:"
         "ARPCONTACT" = "8:M. Scott Christensen"
@@ -1154,7 +1170,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_679B38C18188413C9345CEE4E2A1BD88"
             {
-            "SourcePath" = "8:..\\Scott'sMapTool\\obj\\Debug\\ScottsMapTool.exe"
+            "SourcePath" = "8:..\\Scott'sMapTool\\obj\\Release\\ScottsMapTool.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_E8ED1CCB513340E5863828FD6CB6CD07"

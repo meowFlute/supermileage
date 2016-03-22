@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Scott_sMapTool"
         mc:Ignorable="d"
-        Title="Scott's MAP Tools" Height="675" Width="1500"
+        Title="Scott's MAP Tools" Height="725" Width="1500"
         Icon="resources\Icons8-Windows-8-Transport-Engine.ico">
     <Grid>
         <DockPanel>
