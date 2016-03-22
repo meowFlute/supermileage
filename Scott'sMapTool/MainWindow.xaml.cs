@@ -20,6 +20,7 @@ namespace Scott_sMapTool
         ObservableCollection<GridRowObject> table = new ObservableCollection<GridRowObject>();
         //these tables enable us to switch rapidly between tables after they've been populated for the first time
         ObservableCollection<GridRowObject> emptyTable = new ObservableCollection<GridRowObject>();
+        ObservableCollection<GridRowObject> lambdaCountTable = new ObservableCollection<GridRowObject>();
         ObservableCollection<GridRowObject> lambdaAverageTable = new ObservableCollection<GridRowObject>();
         ObservableCollection<GridRowObject> baseTuneTable = new ObservableCollection<GridRowObject>();
         ObservableCollection<GridRowObject> suggestedTuneTable = new ObservableCollection<GridRowObject>();
@@ -587,7 +588,11 @@ namespace Scott_sMapTool
         //this function does the leg work for averaging the tables we have loaded
         private void averageLambdaTables()
         {
+            //clear out the existing tables
             lambdaAverageTable = new ObservableCollection<GridRowObject>(NewCopy(emptyTable));
+            lambdaCountTable = new ObservableCollection<GridRowObject>(NewCopy(emptyTable));
+
+            //go through each of the opened lambda files
             foreach(KeyValuePair<string, ObservableCollection<GridRowObject>> pair in openedLambdaDictionary.ToList())
             {
                 //pair.Value is the observable collection of the open file
@@ -599,154 +604,310 @@ namespace Scott_sMapTool
                     if (pair.Value[tpsIndex].B != null && lambdaAverageTable[tpsIndex].B == null)
                         lambdaAverageTable[tpsIndex].B = 0.0;
                     if (pair.Value[tpsIndex].B != null)
-                        lambdaAverageTable[tpsIndex].B += pair.Value[tpsIndex].B / openedLambdaDictionary.Count;
+                    {
+                        lambdaAverageTable[tpsIndex].B += pair.Value[tpsIndex].B;
+                        if (lambdaCountTable[tpsIndex].B == null)
+                            lambdaCountTable[tpsIndex].B = 0.0;
+                        lambdaCountTable[tpsIndex].B += 1.0;
+                    }
 
                     // field C
                     if (pair.Value[tpsIndex].C != null && lambdaAverageTable[tpsIndex].C == null)
                         lambdaAverageTable[tpsIndex].C = 0.0;
                     if (pair.Value[tpsIndex].C != null)
-                        lambdaAverageTable[tpsIndex].C += pair.Value[tpsIndex].C / openedLambdaDictionary.Count;
+                    {
+                        lambdaAverageTable[tpsIndex].C += pair.Value[tpsIndex].C;
+                        if (lambdaCountTable[tpsIndex].C == null)
+                            lambdaCountTable[tpsIndex].C = 0.0;
+                        lambdaCountTable[tpsIndex].C += 1.0;
+                    }
 
                     // field D
                     if (pair.Value[tpsIndex].D != null && lambdaAverageTable[tpsIndex].D == null)
                         lambdaAverageTable[tpsIndex].D = 0.0;
                     if (pair.Value[tpsIndex].D != null)
-                        lambdaAverageTable[tpsIndex].D += pair.Value[tpsIndex].D / openedLambdaDictionary.Count;
+                    {
+                        lambdaAverageTable[tpsIndex].D += pair.Value[tpsIndex].D;
+                        if (lambdaCountTable[tpsIndex].D == null)
+                            lambdaCountTable[tpsIndex].D = 0.0;
+                        lambdaCountTable[tpsIndex].D += 1.0;
+                    }
 
                     // field E
                     if (pair.Value[tpsIndex].E != null && lambdaAverageTable[tpsIndex].E == null) 
                         lambdaAverageTable[tpsIndex].E = 0.0;
-                    if (pair.Value[tpsIndex].E != null) 
-                        lambdaAverageTable[tpsIndex].E += pair.Value[tpsIndex].E / openedLambdaDictionary.Count;
+                    if (pair.Value[tpsIndex].E != null)
+                    {
+                        lambdaAverageTable[tpsIndex].E += pair.Value[tpsIndex].E;
+                        if (lambdaCountTable[tpsIndex].E == null)
+                            lambdaCountTable[tpsIndex].E = 0.0;
+                        lambdaCountTable[tpsIndex].E += 1.0;
+                    }
 
                     // field F
                     if (pair.Value[tpsIndex].F != null && lambdaAverageTable[tpsIndex].F == null)
                         lambdaAverageTable[tpsIndex].F = 0.0;
                     if (pair.Value[tpsIndex].F != null)
-                        lambdaAverageTable[tpsIndex].F += pair.Value[tpsIndex].F / openedLambdaDictionary.Count;
+                    {
+                        lambdaAverageTable[tpsIndex].F += pair.Value[tpsIndex].F;
+                        if (lambdaCountTable[tpsIndex].F == null)
+                            lambdaCountTable[tpsIndex].F = 0.0;
+                        lambdaCountTable[tpsIndex].F += 1.0;
+                    }
 
                     // field G
                     if (pair.Value[tpsIndex].G != null && lambdaAverageTable[tpsIndex].G == null)
                         lambdaAverageTable[tpsIndex].G = 0.0;
                     if (pair.Value[tpsIndex].G != null)
-                        lambdaAverageTable[tpsIndex].G += pair.Value[tpsIndex].G / openedLambdaDictionary.Count;
+                    {
+                        lambdaAverageTable[tpsIndex].G += pair.Value[tpsIndex].G;
+                        if (lambdaCountTable[tpsIndex].G == null)
+                            lambdaCountTable[tpsIndex].G = 0.0;
+                        lambdaCountTable[tpsIndex].G += 1.0;
+                    }
 
                     // field H
                     if (pair.Value[tpsIndex].H != null && lambdaAverageTable[tpsIndex].H == null)
                         lambdaAverageTable[tpsIndex].H = 0.0;
                     if (pair.Value[tpsIndex].H != null)
-                        lambdaAverageTable[tpsIndex].H += pair.Value[tpsIndex].H / openedLambdaDictionary.Count;
+                    {
+                        lambdaAverageTable[tpsIndex].H += pair.Value[tpsIndex].H;
+                        if (lambdaCountTable[tpsIndex].H == null)
+                            lambdaCountTable[tpsIndex].H = 0.0;
+                        lambdaCountTable[tpsIndex].H += 1.0;
+                    }
 
                     // field I
                     if (pair.Value[tpsIndex].I != null && lambdaAverageTable[tpsIndex].I == null)
                         lambdaAverageTable[tpsIndex].I = 0.0;
                     if (pair.Value[tpsIndex].I != null)
-                        lambdaAverageTable[tpsIndex].I += pair.Value[tpsIndex].I / openedLambdaDictionary.Count;
+                    {
+                        lambdaAverageTable[tpsIndex].I += pair.Value[tpsIndex].I;
+                        if (lambdaCountTable[tpsIndex].I == null)
+                            lambdaCountTable[tpsIndex].I = 0.0;
+                        lambdaCountTable[tpsIndex].I += 1.0;
+                    }
 
                     // field J
                     if (pair.Value[tpsIndex].J != null && lambdaAverageTable[tpsIndex].J == null)
                         lambdaAverageTable[tpsIndex].J = 0.0;
                     if (pair.Value[tpsIndex].J != null)
-                        lambdaAverageTable[tpsIndex].J += pair.Value[tpsIndex].J / openedLambdaDictionary.Count;
+                    {
+                        lambdaAverageTable[tpsIndex].J += pair.Value[tpsIndex].J;
+                        if (lambdaCountTable[tpsIndex].J == null)
+                            lambdaCountTable[tpsIndex].J = 0.0;
+                        lambdaCountTable[tpsIndex].J += 1.0;
+                    }
 
                     // field K
                     if (pair.Value[tpsIndex].K != null && lambdaAverageTable[tpsIndex].K == null)
                         lambdaAverageTable[tpsIndex].K = 0.0;
                     if (pair.Value[tpsIndex].K != null)
-                        lambdaAverageTable[tpsIndex].K += pair.Value[tpsIndex].K / openedLambdaDictionary.Count;
+                    {
+                        lambdaAverageTable[tpsIndex].K += pair.Value[tpsIndex].K;
+                        if (lambdaCountTable[tpsIndex].K == null)
+                            lambdaCountTable[tpsIndex].K = 0.0;
+                        lambdaCountTable[tpsIndex].K += 1.0;
+                    }
 
                     // field L
                     if (pair.Value[tpsIndex].L != null && lambdaAverageTable[tpsIndex].L == null)
                         lambdaAverageTable[tpsIndex].L = 0.0;
                     if (pair.Value[tpsIndex].L != null)
-                        lambdaAverageTable[tpsIndex].L += pair.Value[tpsIndex].L / openedLambdaDictionary.Count;
+                    {
+                        lambdaAverageTable[tpsIndex].L += pair.Value[tpsIndex].L;
+                        if (lambdaCountTable[tpsIndex].L == null)
+                            lambdaCountTable[tpsIndex].L = 0.0;
+                        lambdaCountTable[tpsIndex].L += 1.0;
+                    }
 
                     // field M
                     if (pair.Value[tpsIndex].M != null && lambdaAverageTable[tpsIndex].M == null)
                         lambdaAverageTable[tpsIndex].M = 0.0;
                     if (pair.Value[tpsIndex].M != null)
-                        lambdaAverageTable[tpsIndex].M += pair.Value[tpsIndex].M / openedLambdaDictionary.Count;
+                    {
+                        lambdaAverageTable[tpsIndex].M += pair.Value[tpsIndex].M;
+                        if (lambdaCountTable[tpsIndex].M == null)
+                            lambdaCountTable[tpsIndex].M = 0.0;
+                        lambdaCountTable[tpsIndex].M += 1.0;
+                    }
 
                     // field N
                     if (pair.Value[tpsIndex].N != null && lambdaAverageTable[tpsIndex].N == null)
                         lambdaAverageTable[tpsIndex].N = 0.0;
                     if (pair.Value[tpsIndex].N != null)
-                        lambdaAverageTable[tpsIndex].N += pair.Value[tpsIndex].N / openedLambdaDictionary.Count;
+                    {
+                        lambdaAverageTable[tpsIndex].N += pair.Value[tpsIndex].N;
+                        if (lambdaCountTable[tpsIndex].N == null)
+                            lambdaCountTable[tpsIndex].N = 0.0;
+                        lambdaCountTable[tpsIndex].N += 1.0;
+                    }
 
                     // field O
                     if (pair.Value[tpsIndex].O != null && lambdaAverageTable[tpsIndex].O == null)
                         lambdaAverageTable[tpsIndex].O = 0.0;
                     if (pair.Value[tpsIndex].O != null)
-                        lambdaAverageTable[tpsIndex].O += pair.Value[tpsIndex].O / openedLambdaDictionary.Count;
+                    {
+                        lambdaAverageTable[tpsIndex].O  += pair.Value[tpsIndex].O ;
+                        if (lambdaCountTable[tpsIndex].O  == null)
+                            lambdaCountTable[tpsIndex].O  = 0.0;
+                        lambdaCountTable[tpsIndex].O  += 1.0;
+                    }
 
                     // field P
                     if (pair.Value[tpsIndex].P != null && lambdaAverageTable[tpsIndex].P == null)
                         lambdaAverageTable[tpsIndex].P = 0.0;
                     if (pair.Value[tpsIndex].P != null)
-                        lambdaAverageTable[tpsIndex].P += pair.Value[tpsIndex].P / openedLambdaDictionary.Count;
+                    {
+                        lambdaAverageTable[tpsIndex].P += pair.Value[tpsIndex].P;
+                        if (lambdaCountTable[tpsIndex].P == null)
+                            lambdaCountTable[tpsIndex].P = 0.0;
+                        lambdaCountTable[tpsIndex].P += 1.0;
+                    }
 
                     // field Q
                     if (pair.Value[tpsIndex].Q != null && lambdaAverageTable[tpsIndex].Q == null)
                         lambdaAverageTable[tpsIndex].Q = 0.0;
                     if (pair.Value[tpsIndex].Q != null)
-                        lambdaAverageTable[tpsIndex].Q += pair.Value[tpsIndex].Q / openedLambdaDictionary.Count;
+                    {
+                        lambdaAverageTable[tpsIndex].Q += pair.Value[tpsIndex].Q;
+                        if (lambdaCountTable[tpsIndex].Q == null)
+                            lambdaCountTable[tpsIndex].Q = 0.0;
+                        lambdaCountTable[tpsIndex].Q += 1.0;
+                    }
 
                     // field R
                     if (pair.Value[tpsIndex].R != null && lambdaAverageTable[tpsIndex].R == null)
                         lambdaAverageTable[tpsIndex].R = 0.0;
                     if (pair.Value[tpsIndex].R != null)
-                        lambdaAverageTable[tpsIndex].R += pair.Value[tpsIndex].R / openedLambdaDictionary.Count;
+                    {
+                        lambdaAverageTable[tpsIndex].R += pair.Value[tpsIndex].R;
+                        if (lambdaCountTable[tpsIndex].R == null)
+                            lambdaCountTable[tpsIndex].R = 0.0;
+                        lambdaCountTable[tpsIndex].R += 1.0;
+                    }
 
                     // field S
                     if (pair.Value[tpsIndex].S != null && lambdaAverageTable[tpsIndex].S == null)
                         lambdaAverageTable[tpsIndex].S = 0.0;
                     if (pair.Value[tpsIndex].S != null)
-                        lambdaAverageTable[tpsIndex].S += pair.Value[tpsIndex].S / openedLambdaDictionary.Count;
+                    {
+                        lambdaAverageTable[tpsIndex].R += pair.Value[tpsIndex].R;
+                        if (lambdaCountTable[tpsIndex].R == null)
+                            lambdaCountTable[tpsIndex].R = 0.0;
+                        lambdaCountTable[tpsIndex].R += 1.0;
+                    }
 
                     // field T
                     if (pair.Value[tpsIndex].T != null && lambdaAverageTable[tpsIndex].T == null)
                         lambdaAverageTable[tpsIndex].T = 0.0;
                     if (pair.Value[tpsIndex].T != null)
-                        lambdaAverageTable[tpsIndex].T += pair.Value[tpsIndex].T / openedLambdaDictionary.Count;
+                    {
+                        lambdaAverageTable[tpsIndex].T += pair.Value[tpsIndex].T;
+                        if (lambdaCountTable[tpsIndex].T == null)
+                            lambdaCountTable[tpsIndex].T = 0.0;
+                        lambdaCountTable[tpsIndex].T += 1.0;
+                    }
 
                     // field U
                     if (pair.Value[tpsIndex].U != null && lambdaAverageTable[tpsIndex].U == null)
                         lambdaAverageTable[tpsIndex].U = 0.0;
                     if (pair.Value[tpsIndex].U != null)
-                        lambdaAverageTable[tpsIndex].U += pair.Value[tpsIndex].U / openedLambdaDictionary.Count;
+                    {
+                        lambdaAverageTable[tpsIndex].U += pair.Value[tpsIndex].U;
+                        if (lambdaCountTable[tpsIndex].U == null)
+                            lambdaCountTable[tpsIndex].U = 0.0;
+                        lambdaCountTable[tpsIndex].U += 1.0;
+                    }
 
                     // field V
                     if (pair.Value[tpsIndex].V != null && lambdaAverageTable[tpsIndex].V == null)
                         lambdaAverageTable[tpsIndex].V = 0.0;
                     if (pair.Value[tpsIndex].V != null)
-                        lambdaAverageTable[tpsIndex].V += pair.Value[tpsIndex].V / openedLambdaDictionary.Count;
+                    {
+                        lambdaAverageTable[tpsIndex].V += pair.Value[tpsIndex].V;
+                        if (lambdaCountTable[tpsIndex].V == null)
+                            lambdaCountTable[tpsIndex].V = 0.0;
+                        lambdaCountTable[tpsIndex].V += 1.0;
+                    }
 
                     // field W
                     if (pair.Value[tpsIndex].W != null && lambdaAverageTable[tpsIndex].W == null)
                         lambdaAverageTable[tpsIndex].W = 0.0;
                     if (pair.Value[tpsIndex].W != null)
-                        lambdaAverageTable[tpsIndex].W += pair.Value[tpsIndex].W / openedLambdaDictionary.Count;
+                    {
+                        lambdaAverageTable[tpsIndex].W += pair.Value[tpsIndex].W;
+                        if (lambdaCountTable[tpsIndex].W == null)
+                            lambdaCountTable[tpsIndex].W = 0.0;
+                        lambdaCountTable[tpsIndex].W += 1.0;
+                    }
 
                     // field X
                     if (pair.Value[tpsIndex].X != null && lambdaAverageTable[tpsIndex].X == null)
                         lambdaAverageTable[tpsIndex].X = 0.0;
                     if (pair.Value[tpsIndex].X != null)
-                        lambdaAverageTable[tpsIndex].X += pair.Value[tpsIndex].X / openedLambdaDictionary.Count;
+                    {
+                        lambdaAverageTable[tpsIndex].X += pair.Value[tpsIndex].X;
+                        if (lambdaCountTable[tpsIndex].X == null)
+                            lambdaCountTable[tpsIndex].X = 0.0;
+                        lambdaCountTable[tpsIndex].X += 1.0;
+                    }
 
                     // field Y
                     if (pair.Value[tpsIndex].Y != null && lambdaAverageTable[tpsIndex].Y == null)
                         lambdaAverageTable[tpsIndex].Y = 0.0;
                     if (pair.Value[tpsIndex].Y != null)
-                        lambdaAverageTable[tpsIndex].Y += pair.Value[tpsIndex].Y / openedLambdaDictionary.Count;
+                    {
+                        lambdaAverageTable[tpsIndex].Y += pair.Value[tpsIndex].Y;
+                        if (lambdaCountTable[tpsIndex].Y == null)
+                            lambdaCountTable[tpsIndex].Y = 0.0;
+                        lambdaCountTable[tpsIndex].Y += 1.0;
+                    }
 
                     // field Z
                     if (pair.Value[tpsIndex].Z != null && lambdaAverageTable[tpsIndex].Z == null)
                         lambdaAverageTable[tpsIndex].Z = 0.0;
                     if (pair.Value[tpsIndex].Z != null)
-                        lambdaAverageTable[tpsIndex].Z += pair.Value[tpsIndex].Z / openedLambdaDictionary.Count;
+                    {
+                        lambdaAverageTable[tpsIndex].Z += pair.Value[tpsIndex].Z;
+                        if (lambdaCountTable[tpsIndex].Z == null)
+                            lambdaCountTable[tpsIndex].Z = 0.0;
+                        lambdaCountTable[tpsIndex].Z += 1.0;
+                    }
                 }
             }
 
+            // we still need to average the tables
+            for (int tpsIndex = 1; tpsIndex < 27; tpsIndex++)
+            {
+                lambdaAverageTable[tpsIndex].B = !lambdaCountTable[tpsIndex].B.HasValue ? null : lambdaAverageTable[tpsIndex].B / lambdaCountTable[tpsIndex].B;
+                lambdaAverageTable[tpsIndex].C = !lambdaCountTable[tpsIndex].C.HasValue ? null : lambdaAverageTable[tpsIndex].C / lambdaCountTable[tpsIndex].C;
+                lambdaAverageTable[tpsIndex].D = !lambdaCountTable[tpsIndex].D.HasValue ? null : lambdaAverageTable[tpsIndex].D / lambdaCountTable[tpsIndex].D;
+                lambdaAverageTable[tpsIndex].E = !lambdaCountTable[tpsIndex].E.HasValue ? null : lambdaAverageTable[tpsIndex].E / lambdaCountTable[tpsIndex].E;
+                lambdaAverageTable[tpsIndex].F = !lambdaCountTable[tpsIndex].F.HasValue ? null : lambdaAverageTable[tpsIndex].F / lambdaCountTable[tpsIndex].F;
+                lambdaAverageTable[tpsIndex].G = !lambdaCountTable[tpsIndex].G.HasValue ? null : lambdaAverageTable[tpsIndex].G / lambdaCountTable[tpsIndex].G;
+                lambdaAverageTable[tpsIndex].H = !lambdaCountTable[tpsIndex].H.HasValue ? null : lambdaAverageTable[tpsIndex].H / lambdaCountTable[tpsIndex].H;
+                lambdaAverageTable[tpsIndex].I = !lambdaCountTable[tpsIndex].I.HasValue ? null : lambdaAverageTable[tpsIndex].I / lambdaCountTable[tpsIndex].I;
+                lambdaAverageTable[tpsIndex].J = !lambdaCountTable[tpsIndex].J.HasValue ? null : lambdaAverageTable[tpsIndex].J / lambdaCountTable[tpsIndex].J;
+                lambdaAverageTable[tpsIndex].K = !lambdaCountTable[tpsIndex].K.HasValue ? null : lambdaAverageTable[tpsIndex].K / lambdaCountTable[tpsIndex].K;
+                lambdaAverageTable[tpsIndex].L = !lambdaCountTable[tpsIndex].L.HasValue ? null : lambdaAverageTable[tpsIndex].L / lambdaCountTable[tpsIndex].L;
+                lambdaAverageTable[tpsIndex].M = !lambdaCountTable[tpsIndex].M.HasValue ? null : lambdaAverageTable[tpsIndex].M / lambdaCountTable[tpsIndex].M;
+                lambdaAverageTable[tpsIndex].N = !lambdaCountTable[tpsIndex].N.HasValue ? null : lambdaAverageTable[tpsIndex].N / lambdaCountTable[tpsIndex].N;
+                lambdaAverageTable[tpsIndex].O = !lambdaCountTable[tpsIndex].O.HasValue ? null : lambdaAverageTable[tpsIndex].O / lambdaCountTable[tpsIndex].O;
+                lambdaAverageTable[tpsIndex].P = !lambdaCountTable[tpsIndex].P.HasValue ? null : lambdaAverageTable[tpsIndex].P / lambdaCountTable[tpsIndex].P;
+                lambdaAverageTable[tpsIndex].Q = !lambdaCountTable[tpsIndex].Q.HasValue ? null : lambdaAverageTable[tpsIndex].Q / lambdaCountTable[tpsIndex].Q;
+                lambdaAverageTable[tpsIndex].R = !lambdaCountTable[tpsIndex].R.HasValue ? null : lambdaAverageTable[tpsIndex].R / lambdaCountTable[tpsIndex].R;
+                lambdaAverageTable[tpsIndex].S = !lambdaCountTable[tpsIndex].S.HasValue ? null : lambdaAverageTable[tpsIndex].S / lambdaCountTable[tpsIndex].S;
+                lambdaAverageTable[tpsIndex].T = !lambdaCountTable[tpsIndex].T.HasValue ? null : lambdaAverageTable[tpsIndex].T / lambdaCountTable[tpsIndex].T;
+                lambdaAverageTable[tpsIndex].U = !lambdaCountTable[tpsIndex].U.HasValue ? null : lambdaAverageTable[tpsIndex].U / lambdaCountTable[tpsIndex].U;
+                lambdaAverageTable[tpsIndex].V = !lambdaCountTable[tpsIndex].V.HasValue ? null : lambdaAverageTable[tpsIndex].V / lambdaCountTable[tpsIndex].V;
+                lambdaAverageTable[tpsIndex].W = !lambdaCountTable[tpsIndex].W.HasValue ? null : lambdaAverageTable[tpsIndex].W / lambdaCountTable[tpsIndex].W;
+                lambdaAverageTable[tpsIndex].X = !lambdaCountTable[tpsIndex].X.HasValue ? null : lambdaAverageTable[tpsIndex].X / lambdaCountTable[tpsIndex].X;
+                lambdaAverageTable[tpsIndex].Y = !lambdaCountTable[tpsIndex].Y.HasValue ? null : lambdaAverageTable[tpsIndex].Y / lambdaCountTable[tpsIndex].Y;
+                lambdaAverageTable[tpsIndex].Z = !lambdaCountTable[tpsIndex].Z.HasValue ? null : lambdaAverageTable[tpsIndex].Z / lambdaCountTable[tpsIndex].Z;
+            }
+
+            // now we round the values with inline conditional statements
             for (int y = 1; y <= 26; y++)
             {
                 // if the value is null, return a double? with a null value, otherwise return the same value but rounded to 3 decimal places
