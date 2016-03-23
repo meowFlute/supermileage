@@ -309,11 +309,6 @@
             "AssemblyAsmDisplayName" = "8:System.Net.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
                 "ScatterAssemblies"
                 {
-                    "_59B203701637DA37019054DBF6A13C83"
-                    {
-                    "Name" = "8:System.Net.Http.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:System.Net.Http.dll"
             "TargetName" = "8:"
@@ -620,15 +615,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:ScottsMapTool"
-        "ProductCode" = "8:{0F7D85A0-6AA5-4F6F-AB43-A445A3E80C8C}"
-        "PackageCode" = "8:{051C8F6D-974C-4C4F-95AD-E8CA8DC4079D}"
+        "ProductCode" = "8:{C430F32A-9DDD-4C6A-9046-7A94920E8E3B}"
+        "PackageCode" = "8:{D01D0258-5418-4F48-A7D2-EF1424D5BDE4}"
         "UpgradeCode" = "8:{49C36C88-A71C-44DC-BCC2-95F17FB29F03}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.2.0"
+        "ProductVersion" = "8:1.3.0"
         "Manufacturer" = "8:meowFlute"
         "ARPHELPTELEPHONE" = "8:(509) 460-3033"
         "ARPHELPLINK" = "8:http://www.github.com/meowflute"
@@ -1170,7 +1165,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_679B38C18188413C9345CEE4E2A1BD88"
             {
-            "SourcePath" = "8:..\\Scott'sMapTool\\obj\\Release\\ScottsMapTool.exe"
+            "SourcePath" = "8:..\\Scott'sMapTool\\obj\\Debug\\ScottsMapTool.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_E8ED1CCB513340E5863828FD6CB6CD07"

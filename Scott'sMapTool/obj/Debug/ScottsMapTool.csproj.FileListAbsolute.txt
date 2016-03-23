@@ -11,4 +11,3 @@ C:\Users\Scott\Documents\supermileage\Scott'sMapTool\obj\Debug\ScottsMapTool.Pro
 C:\Users\Scott\Documents\supermileage\Scott'sMapTool\obj\Debug\ScottsMapTool.csproj.GenerateResource.Cache
 C:\Users\Scott\Documents\supermileage\Scott'sMapTool\obj\Debug\ScottsMapTool.exe
 C:\Users\Scott\Documents\supermileage\Scott'sMapTool\obj\Debug\ScottsMapTool.pdb
-C:\Users\Scott\Documents\supermileage\Scott'sMapTool\obj\Debug\ScottsMapTool.csprojResolveAssemblyReference.cache
