@@ -1348,5 +1348,140 @@ namespace Scott_sMapTool
         }
 
         #endregion
+
+        private void SavePED_Click(object sender, RoutedEventArgs e)
+        {
+            //make sure there is a base tune
+            if (baseTune.Count < 1)
+                MessageBox.Show("A base tune is needed before a new tune can be saved!");
+            //make sure there are lambda files
+            if (lambdaList.Count < 1)
+                MessageBox.Show("\t\t\t!!!WARNING!!!\n\nThere are no loaded lambda files, and as a result the new tune will be the same as the old tune.");
+            //make sure that no location of the suggested tune contains a null double
+            foreach(GridRowObject row in suggestedTuneTable)
+            {
+                //check all of the locations for null values
+                if(row.B == null ||
+                   row.C == null ||
+                   row.D == null ||
+                   row.E == null ||
+                   row.F == null ||
+                   row.G == null ||
+                   row.H == null ||
+                   row.I == null ||
+                   row.J == null ||
+                   row.K == null ||
+                   row.L == null ||
+                   row.M == null ||
+                   row.N == null ||
+                   row.O == null ||
+                   row.P == null ||
+                   row.Q == null ||
+                   row.R == null ||
+                   row.S == null ||
+                   row.T == null ||
+                   row.U == null ||
+                   row.V == null ||
+                   row.W == null ||
+                   row.X == null ||
+                   row.Y == null ||
+                   row.Z == null )
+                {
+                    MessageBox.Show("The suggested tune table needs to be processed first!\n\nTry clicking Show->Suggested Tune to make sure that there is something to save");
+                }
+            }
+            
+            //now that the filebytes have been modified in memory, we just need to save it to a new filename
+            // Configure save file dialog box
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+            dlg.FileName = "NewTuneFile"; // Default file name
+            dlg.DefaultExt = ".ped"; // Default file extension
+            dlg.Filter = "ECU MAP files (.ped)|*.ped"; // Filter files by extension
+
+            // Show save file dialog box
+            bool? result = dlg.ShowDialog();
+
+            // Process save file dialog box results if the user didn't hit cancel or something
+            if (result == true)
+            {
+                // Save document
+                string filename = dlg.FileName;
+
+                //Load up the base tune .ped file now that we're sure that we're ready to go
+                byte[] fileBytes = null;
+                string baseTuneFilePath = filepaths[baseTune[0]];
+                try
+                {
+                    fileBytes = File.ReadAllBytes(baseTuneFilePath);
+                }
+                catch (IOException ex)
+                {
+                    MessageBox.Show(string.Format("Something went wrong reading in that base tune file, here is the exception message: \n\n\"{0}\"", ex.Message));
+                    return;
+                }
+
+                //create a temporary array of doubles that can be iterated through easier
+                double[,] fuelTable = new double[25, 26];
+                for (int y = 1; y <= 26; y++)
+                {
+                    fuelTable[0, y - 1] = (double)suggestedTuneTable[27 - y].B;
+                    fuelTable[1, y - 1] = (double)suggestedTuneTable[27 - y].C;
+                    fuelTable[2, y - 1] = (double)suggestedTuneTable[27 - y].D;
+                    fuelTable[3, y - 1] = (double)suggestedTuneTable[27 - y].E;
+                    fuelTable[4, y - 1] = (double)suggestedTuneTable[27 - y].F;
+                    fuelTable[5, y - 1] = (double)suggestedTuneTable[27 - y].G;
+                    fuelTable[6, y - 1] = (double)suggestedTuneTable[27 - y].H;
+                    fuelTable[7, y - 1] = (double)suggestedTuneTable[27 - y].I;
+                    fuelTable[8, y - 1] = (double)suggestedTuneTable[27 - y].J;
+                    fuelTable[9, y - 1] = (double)suggestedTuneTable[27 - y].K;
+                    fuelTable[10, y - 1] = (double)suggestedTuneTable[27 - y].L;
+                    fuelTable[11, y - 1] = (double)suggestedTuneTable[27 - y].M;
+                    fuelTable[12, y - 1] = (double)suggestedTuneTable[27 - y].N;
+                    fuelTable[13, y - 1] = (double)suggestedTuneTable[27 - y].O;
+                    fuelTable[14, y - 1] = (double)suggestedTuneTable[27 - y].P;
+                    fuelTable[15, y - 1] = (double)suggestedTuneTable[27 - y].Q;
+                    fuelTable[16, y - 1] = (double)suggestedTuneTable[27 - y].R;
+                    fuelTable[17, y - 1] = (double)suggestedTuneTable[27 - y].S;
+                    fuelTable[18, y - 1] = (double)suggestedTuneTable[27 - y].T;
+                    fuelTable[19, y - 1] = (double)suggestedTuneTable[27 - y].U;
+                    fuelTable[20, y - 1] = (double)suggestedTuneTable[27 - y].V;
+                    fuelTable[21, y - 1] = (double)suggestedTuneTable[27 - y].W;
+                    fuelTable[22, y - 1] = (double)suggestedTuneTable[27 - y].X;
+                    fuelTable[23, y - 1] = (double)suggestedTuneTable[27 - y].Y;
+                    fuelTable[24, y - 1] = (double)suggestedTuneTable[27 - y].Z;
+                }
+
+                //grab the fuel table out of the binary file
+                int j = 0, k = 25;
+                //From what I've seen so far, this is ALWAYS where the fuel table is in their binary .ped file 
+                //(makes sense because it's probably just a serializable object that gets written to the .ped)
+                for (int i = 185; i < 1485; i++)
+                {
+                    if (i % 2 == 1) //skip all of the empty bytes (every other one)
+                    {
+                        if (k == -1) //increment down each column (j) one by one (rows = k)
+                        {
+                            k = 25;
+                            j++;
+                        }
+                        //convert from a double to their binary format
+                        uint tempInt = (uint)(fuelTable[j, k] / 0.015625) - 1;
+                        fileBytes[i] = (byte)tempInt;
+                        k--;
+                    }
+                }
+
+                try
+                {
+                    File.WriteAllBytes(filename, fileBytes);
+                    MessageBox.Show(string.Format("File Saved!\n\nYou can find it at {0}", filename));
+                }
+                catch (IOException ex)
+                {
+                    MessageBox.Show(string.Format("Something went wrong reading in that base tune file, here is the exception message: \n\n\"{0}\"", ex.Message));
+                    return;
+                }
+            }
+        }
     }
 }
